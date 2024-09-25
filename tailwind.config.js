@@ -4,7 +4,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'island-moments': ['"Island Moments"', 'cursive'],
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms')
