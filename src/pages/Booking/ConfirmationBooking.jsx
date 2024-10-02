@@ -4,9 +4,9 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 const ConfirmationBooking = () => {
     return (
         <div >
-            <div className="p-20">
+            <div className="px-20 py-5">
                 {/*Step process */}
-                <div className="max-w-screen-lg mx-auto py-10 px-4">
+                <div className="max-w-screen-lg mx-auto pb-10 px-4">
                     <div className="flex justify-center mb-8">
                         <div className="flex items-center space-x-4">
                             <div className="flex items-center text-gray-400">
@@ -34,7 +34,7 @@ const ConfirmationBooking = () => {
                 {/*camera and confirmation word */}
                 <div className="flex items-center justify-between  rounded-lg shadow-lg max-w-full overflow-hidden">
                     {/* Left Image */}
-                    <div className="w-[200px] h-[200px] sm:w-[450px] sm:h-[220px] flex-shrink-0">
+                    <div className="w-3/12 h-3/12  flex-shrink-0">
                         <img
                             src="/public/image/Booking/leftCam.jpg"
                             alt="Left Camera"
@@ -44,13 +44,13 @@ const ConfirmationBooking = () => {
 
                     {/* Middle Text */}
                     <div className="flex-grow mt-12 justify-center items-center">
-                        <h2 className="text-center font-semibold text-5xl text-gray-800 font-sans">
+                        <h2 className="text-center font-semibold text-4xl text-gray-800 font-sans">
                             Confirmation
                         </h2>
                     </div>
 
                     {/* Right Image */}
-                    <div className="w-[200px] h-[200px] sm:w-[450px] sm:h-[220px] flex-shrink-0">
+                    <div className="w-3/12 h-3/12 flex-shrink-0">
                         <img
                             src="/public/image/Booking/rightCam.jpg"
                             alt="Right Camera"
@@ -61,7 +61,7 @@ const ConfirmationBooking = () => {
 
                 {/*Confirmation */}
                 <div className="mt-10">
-                    <div className="flex w-full">
+                    <div className="flex w-full h-2/4">
                         {/* Left Div - 55% */}
                         <div className="w-3/5 p-4  ">
                             <div className=" pl-40">
@@ -156,7 +156,7 @@ const ConfirmationBooking = () => {
                             <div className="flex p-4">
 
                                 {/* Content Section */}
-                                <div className="flex p-10 justify-center items-center"> {/* Increased padding */}
+                                <div className="flex p-5 justify-center items-center"> {/* Increased padding */}
                                     {/* Left: Image */}
                                     <div className="flex mb-6 mr-17"> {/* Increased bottom margin */}
                                         <span className="font-bold text-2xl">Customer Name:</span> {/* Bold and increased font size */}
@@ -178,7 +178,7 @@ const ConfirmationBooking = () => {
                             <div className="flex  p-4">
 
                                 {/* Content Section */}
-                                <div className="flex p-10 justify-center items-center"> {/* Increased padding */}
+                                <div className="flex p-5 justify-center items-center"> {/* Increased padding */}
                                     {/* Left: Image */}
                                     <div className="flex mb-6 mr-17"> {/* Increased bottom margin */}
                                         <span className="font-bold text-2xl">Phone Number:</span> {/* Bold and increased font size */}
@@ -200,7 +200,7 @@ const ConfirmationBooking = () => {
                             <div className="flex items-center p-4">
 
                                 {/* Content Section */}
-                                <div className="flex p-10 justify-center items-center "> {/* Increased padding */}
+                                <div className="flex p-5 justify-center items-center "> {/* Increased padding */}
                                     {/* Left: Image */}
                                     <div className="flex mb-6 mr-17"> {/* Increased bottom margin */}
                                         <FaMapMarkerAlt className=" mr-2 text-5xl" /> {/* Location Icon */}
@@ -221,7 +221,7 @@ const ConfirmationBooking = () => {
                             <div className="flex  p-4">
 
                                 {/* Content Section */}
-                                <div className="flex justify-center items-center p-10 "> {/* Increased padding */}
+                                <div className="flex justify-center items-center p-5 "> {/* Increased padding */}
                                     {/* Left: Image */}
                                     <div className="flex mb-6 mr-17"> {/* Increased bottom margin */}
                                         <span className="font-bold text-2xl">Status:</span> {/* Bold and increased font size */}
