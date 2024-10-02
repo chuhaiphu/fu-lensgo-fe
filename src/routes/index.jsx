@@ -5,6 +5,11 @@ import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
 import CompleteRegister from '../pages/Auth/CustomerRegister/CompleteRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
 import Profile from '../pages/Photographer/Profile/Profile'
+import ViewPhotographer from '../pages/ChoosePhotographer/ViewPhotoGrapher'
+import ChoosePhotographer from '../pages/BookingPhotoPage'
+import PhotoShootPlans from '../pages/Booking/PhotoShootPlans'
+import PhotoShootDetail from '../pages/Booking/PhotoShootDetail'
+import ConfirmationBooking from '../pages/Booking/ConfirmationBooking'
 
 
 // // * for user
@@ -61,7 +66,29 @@ const routes = [
         element: <Profile />
       },
     ]
+  },
+  {
+    path: '/choose-photographer',
+    element: <ViewPhotographer />,
   }
+  ,
+  {
+    path: '/view-photographer',
+    element: <ChoosePhotographer />,
+  },
+  {
+    path: '/photo-combo',
+    element: <PhotoShootPlans />,
+  },
+  {
+    path: '/booking-photo-details',
+    element:<PhotoShootDetail /> 
+  },
+  {
+    path: '/confirmation-booking',
+    element: <ConfirmationBooking />,
+  }
+  
 ]
 
 const RouteElements = () => {
