@@ -5,6 +5,7 @@ import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
 import CompleteRegister from '../pages/Auth/CustomerRegister/CompleteRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
 import Profile from '../pages/Photographer/Profile/Profile'
+import PhotographerEditPage from '../pages/Photographer/PhotographerEditPage/PhotographerEditPage'
 
 
 // // * for user
@@ -59,6 +60,10 @@ const routes = [
       {
         path: '/photographer/profile',
         element: <Profile />
+      },
+      {
+        path: '/photographer/edit',
+        element: <PhotographerEditPage />
       },
     ]
   }
