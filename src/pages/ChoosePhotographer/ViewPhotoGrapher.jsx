@@ -2,12 +2,12 @@ import { CheckCircleIcon } from '@heroicons/react/20/solid'
 const photographers = [
     {
         id: 1,
-        name: 'Basic Tee',
+        name: 'Ten Photographer 1',
         href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+        imageSrc: 'https://allimages.sgp1.digitaloceanspaces.com/wikilaptopcom/2021/01/Hinh-nen-phong-canh-dep-nhat.jpg',
         imageAlt: "Front of men's Basic Tee in black.",
         price: '999',
-        color: 'Black',
+        color: 'Concept',
     },
     // More photographers...
 ]
@@ -49,54 +49,202 @@ export default function ViewPhotographer() {
 
                 <div className="mt-10">
                     {photographers.map((photographer) => (
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-10 ">
-                            <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
-                                {/* Big image */}
-                                <div className="w-3/4 p-2" >
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-full h-auto object-cover object-center rounded-xl"
-                                    />
-                                </div>
-
-                                {/* Small images in a row below the big one */}
-                                <div className="flex justify-center mt-2 w-full">
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                </div>
-
-                                {/* Photographer information */}
-                                <div className="mt-4 flex justify-between w-full p-2">
-                                    <div>
-                                        <h3 className="font-sans font-bold">
-                                            <a href={photographer.href}>
-                                                <span aria-hidden="true" className="absolute inset-0" />
-                                                {photographer.name}
-                                            </a>
-                                        </h3>
-                                        <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-10">
+                            <div className=" w-72 h-auto">
+                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                                    {/* Big image */}
+                                    <div className="w-3/4 p-2" >
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                        />
                                     </div>
-                                    <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
-                                        {photographer.price}k
-                                    </p>
 
+                                    {/* Small images in a row below the big one */}
+                                    <div className="flex justify-center mt-2 w-full">
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Photographer information */}
+                                    <div className="mt-4 flex justify-between w-full p-2">
+                                        <div>
+                                            <h3 className="font-sans font-bold">
+                                                <a href={photographer.href}>
+                                                    <span aria-hidden="true" className="absolute inset-0" />
+                                                    {photographer.name}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                        </div>
+                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
+                                            {photographer.price}k
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className=" w-72 h-auto">
+                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                                    {/* Big image */}
+                                    <div className="w-3/4 p-2" >
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Small images in a row below the big one */}
+                                    <div className="flex justify-center mt-2 w-full">
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Photographer information */}
+                                    <div className="mt-4 flex justify-between w-full p-2">
+                                        <div>
+                                            <h3 className="font-sans font-bold">
+                                                <a href={photographer.href}>
+                                                    <span aria-hidden="true" className="absolute inset-0" />
+                                                    {photographer.name}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                        </div>
+                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
+                                            {photographer.price}k
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className=" w-72 h-auto">
+                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                                    {/* Big image */}
+                                    <div className="w-3/4 p-2" >
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Small images in a row below the big one */}
+                                    <div className="flex justify-center mt-2 w-full">
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Photographer information */}
+                                    <div className="mt-4 flex justify-between w-full p-2">
+                                        <div>
+                                            <h3 className="font-sans font-bold">
+                                                <a href={photographer.href}>
+                                                    <span aria-hidden="true" className="absolute inset-0" />
+                                                    {photographer.name}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                        </div>
+                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
+                                            {photographer.price}k
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className=" w-72 h-auto">
+                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                                    {/* Big image */}
+                                    <div className="w-3/4 p-2" >
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Small images in a row below the big one */}
+                                    <div className="flex justify-center mt-2 w-full">
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Photographer information */}
+                                    <div className="mt-4 flex justify-between w-full p-2">
+                                        <div>
+                                            <h3 className="font-sans font-bold">
+                                                <a href={photographer.href}>
+                                                    <span aria-hidden="true" className="absolute inset-0" />
+                                                    {photographer.name}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                        </div>
+                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
+                                            {photographer.price}k
+                                        </p>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+
                     ))}
                 </div>
             </div>
