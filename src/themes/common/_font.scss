@@ -1,0 +1,33 @@
+// **Import Local Fonts**
+@font-face {
+  font-family: "BlackCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "BoldCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "BookCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-Book.ttf") format("truetype");
+}
+@font-face {
+  font-family: "ExtraBoldCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-ExtraBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "LightCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "MediumCereal";
+  src: local("Airbnb-Cereal"),
+    url("../../fonts/SVN-Airbnb-Cereal-Medium.ttf") format("truetype");
+}

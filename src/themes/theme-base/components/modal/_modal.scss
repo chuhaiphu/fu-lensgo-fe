@@ -1,0 +1,27 @@
+.ant-modal .ant-modal-content {
+  border-radius: 15px;
+  padding: 12px 30px;
+  .ant-modal-title {
+    @apply text-2xl-bold;
+    padding-top: 30px;
+  }
+
+  .ant-modal-close {
+    height: 47px;
+    width: 47px;
+    border-radius: 100%;
+    border: 1px solid black;
+    margin-top: 28px;
+    margin-right: 10px;
+  }
+  .ant-modal-close-x {
+    color: black;
+  }
+  .ant-modal-body {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+  }
+}

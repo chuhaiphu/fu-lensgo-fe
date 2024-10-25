@@ -11,6 +11,11 @@ import ChoosePhotographer from '../pages/BookingPhotoPage'
 import PhotoShootPlans from '../pages/Booking/PhotoShootPlans'
 import PhotoShootDetail from '../pages/Booking/PhotoShootDetail'
 import ConfirmationBooking from '../pages/Booking/ConfirmationBooking'
+import DashboardLayout from '../components/layouts/dashboard-layout'
+import { ADMIN_ROUTES } from '../constants/routes'
+import OverviewPage from '../pages/BookingPhotoPage/OverviewPage'
+import HomePage from '../components/overview'
+import ViewDetailPage from '../pages/ViewDetail'
 
 
 // // * for user
@@ -87,13 +92,36 @@ const routes = [
   },
   {
     path: '/booking-photo-details',
-    element:<PhotoShootDetail /> 
+    element: <PhotoShootDetail />
   },
   {
     path: '/confirmation-booking',
     element: <ConfirmationBooking />,
-  }
-  
+  },
+
+  {
+    path: ADMIN_ROUTES.ADMIN,
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: ADMIN_ROUTES.OVERVIEW,
+        element: <HomePage />,
+      },
+      {
+        path: ADMIN_ROUTES.CUSTOMER,
+        element: <ViewDetailPage />,
+      },
+      {
+        path: ADMIN_ROUTES.BOOKING,
+        element: <ViewDetailPage />,
+      },
+      {
+        path: ADMIN_ROUTES.STUDIO,
+        element: <ViewDetailPage />,
+      },
+    ],
+  },
+
 ]
 
 const RouteElements = () => {

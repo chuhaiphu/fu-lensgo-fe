@@ -1,0 +1,43 @@
+.ant-form {
+  .ant-form-item {
+    .ant-row {
+      display: block;
+    }
+  }
+}
+.multiple-time {
+  .ant-picker-outlined {
+    background: var(--Shade-N900, #151316);
+    width: 40px;
+    height: 34px;
+    margin-left: 3px;
+  }
+  .ant-picker-input {
+    input {
+      @apply text-xs-medium;
+      text-align: center;
+      color: white;
+    }
+
+    .ant-picker-suffix {
+      display: none;
+    }
+  }
+
+  .ant-row .ant-form-item-row {
+    display: inline-flex;
+  }
+  .ant-form-item-label > label {
+    // @apply text-base-bold !important;
+  }
+  .ant-form-item-label > label::after{
+    // @apply text-base-bold !important;
+    display: none;
+  }
+
+  .ant-space {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
