@@ -1,16 +1,65 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { registerApi } from '../../../apis/user-api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { EnvelopeIcon, LockClosedIcon, UserIcon, PhoneIcon, CalendarIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+
 
 export default function CustomerRegister() {
-    const navigate = useNavigate(); // Initialize the navigation hook
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-    const handleNext = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        navigate('/complete-register'); // Navigate to the complete-register route
+    const onSubmit = async (data) => {
+        try {
+            const signupData = {
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+                username: data.email,
+                fullName: data.name,
+                address: "",
+                dob: data.dob,
+                gender: data.gender,
+                nationality: "Vietnam",
+                instagram: null,
+                status: "active"
+            };
+
+            const response = await registerApi(signupData);
+            
+            toast.success('Registration successful! Redirecting...', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+
+            // Redirect after 3 seconds
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error?.data ?.message || 'Registration failed. Please try again.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
     };
+
+    const password = watch("password");
 
     return (
         <>
-
+            <ToastContainer />
             <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -20,43 +69,138 @@ export default function CustomerRegister() {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                     <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-                        <form action="#" method="POST" className="space-y-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Email
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        placeholder="Email"
-                                        required
-                                        autoComplete="email"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
+                                <div className="mt-2 mb-7">
+                                    <div className="relative">
+                                        <EnvelopeIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                        <input
+                                            {...register("email", {
+                                                required: "Email is required",
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: "Invalid email address"
+                                                }
+                                            })}
+                                            type="email"
+                                            placeholder="Email"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                                </div>
+
+                                <div className="mt-2 mb-7">
+                                    <div className="relative">
+                                        <LockClosedIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                        <input
+                                            {...register("password", {
+                                                required: "Password is required",
+                                                minLength: {
+                                                    value: 8,
+                                                    message: "Password must be at least 8 characters"
+                                                }
+                                            })}
+                                            type="password"
+                                            placeholder="Password"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+                                </div>
+
+                                <div className="mt-2 mb-7">
+                                    <div className="relative">
+                                        <LockClosedIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                        <input
+                                            {...register("confirmPassword", {
+                                                required: "Please confirm your password",
+                                                validate: value =>
+                                                    value === password || "Passwords do not match"
+                                            })}
+                                            type="password"
+                                            placeholder="Confirm Password"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
+                                </div>
+
+                                <div className="mt-2 mb-7">
+                                    <div className="relative">
+                                        <UserIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                        <input
+                                            {...register("name", { required: "Name is required" })}
+                                            type="text"
+                                            placeholder="Name"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                                </div>
+                                <div className="mt-2 mb-7">
+                                    <div className="relative">
+                                        <PhoneIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                        <input
+                                            {...register("phone", { required: "Phone is required" })}
+                                            type="text"
+                                            placeholder="Phone"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+                                </div>
+
+                                <div className="mt-2 mb-7 flex items-center gap-4">
+                                    <div className="w-1/2">
+                                        <label htmlFor="dob" className="block text-sm font-medium leading-6 text-gray-500 mb-2">
+                                            Date of Birth
+                                        </label>
+                                        <div className="relative">
+                                            <CalendarIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                            <input
+                                                {...register("dob", { required: "Date of Birth is required" })}
+                                                type="date"
+                                                placeholder="Date of Birth"
+                                                className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            />
+                                        </div>
+                                        {errors.dob && <p className="text-red-500 text-sm mt-1">{errors.dob.message}</p>}
+                                    </div>
+
+                                    <div className="w-1/2">
+                                        <label htmlFor="gender" className="block text-sm font-medium leading-6 text-gray-500 mb-2">
+                                            Gender
+                                        </label>
+                                        <div className="relative">
+                                            <UserGroupIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2" />
+                                            <select
+                                                {...register("gender", { required: "Gender is required" })}
+                                                className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            >
+                                                <option value="" disabled selected>
+                                                    Select Gender
+                                                </option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>}
+                                    </div>
                                 </div>
                             </div>
-
                             <div className="flex items-center justify-between">
 
-                                <div className="text-sm leading-6">
-                                    <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                        Have account already?
-                                    </Link>
-                                </div>
                             </div>
-
                             <div className="flex justify-center">
                                 <button
                                     type="submit"
-                                    onClick={handleNext}
                                     className="flex w-1/3 justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                                 >
-                                    Next
+                                    Register
                                 </button>
                             </div>
-
                         </form>
 
                         <div>
@@ -94,13 +238,9 @@ export default function CustomerRegister() {
                                     </svg>
                                     <span className="text-sm font-semibold leading-6">Google</span>
                                 </a>
-
-
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </>

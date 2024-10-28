@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import ImageHomeCarousel from "/image/Home/home-carousel.jpg"
+import { Link } from 'react-router-dom'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -20,7 +22,7 @@ export default function Hero() {
             <a href="#" className="-m-1.5 p-1.5">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">LensGo</span>
-                <span className="text-5xl font-island-moments text-[#D26C6C]">LensGo</span>
+                <span className="text-6xl font-island-moments text-[#dd8181]">LensGo</span>
               </a>
             </a>
           </div>
@@ -42,9 +44,12 @@ export default function Hero() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-white">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            <Link
+              to="/login"
+              className="text-md font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-2 rounded-md transition duration-300 ease-in-out"
+            >
+              Log in <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -82,12 +87,12 @@ export default function Hero() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
+                  <Link
+                    to="/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
                   >
                     Log in
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -96,11 +101,14 @@ export default function Hero() {
       </header>
 
       <div className="relative isolate overflow-hidden pt-14">
-        <img
-          alt=""
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
+        <div className="absolute inset-0 -z-10">
+          <img
+            alt=""
+            src={ImageHomeCarousel}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black opacity-80"></div>
+        </div>
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -114,32 +122,19 @@ export default function Hero() {
           />
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
-              Announcing our next round of funding.{' '}
-              <a href="#" className="font-semibold text-white">
-                <span aria-hidden="true" className="absolute inset-0" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Data to enrich your online business
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              ONLY THE BEST PHOTOGRAPHERS
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+            <p className="mt-6 text-xl leading-8 text-gray-200">
+              Find and book professional photographers at our platform
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#"
-                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                className="rounded-md bg-yellow-500 px-10 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                Get started
-              </a>
-              <a href="#" className="text-sm font-semibold leading-6 text-white">
-                Learn more <span aria-hidden="true">→</span>
+                BOOK NOW
               </a>
             </div>
           </div>

@@ -2,7 +2,6 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import Home from '../pages/Home'
 import Login from '../pages/Auth/Login/Login'
 import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
-import CompleteRegister from '../pages/Auth/CustomerRegister/CompleteRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
 import Profile from '../pages/Photographer/Profile/Profile'
 import PhotographerEditPage from '../pages/Photographer/PhotographerEditPage/PhotographerEditPage'
@@ -50,10 +49,6 @@ const routes = [
   {
     path: '/register',
     element: <CustomerRegister />,
-  },
-  {
-    path: '/complete-register',
-    element: <CompleteRegister />,
   },
   {
     path: '/photographer-register',
