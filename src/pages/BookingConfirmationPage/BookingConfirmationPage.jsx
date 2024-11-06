@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-const ConfirmationBooking = () => {
+const BookingConfirmationPage = () => {
     return (
         <div >
             <div className="px-20 py-5">
@@ -296,4 +296,4 @@ const ConfirmationBooking = () => {
     );
 };
 
-export default ConfirmationBooking;
+export default BookingConfirmationPage;

@@ -2,7 +2,7 @@ import React from 'react'
 import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 import ReviewComponent from './Review'
 
-function Profile() {
+function PhotographerProfile() {
   const backgroundImage = 'https://pangolinphoto.com/wp-content/uploads/2020/05/Guest-with-camera-gear-on-safari-in-Botswana-Pangolin-Photo-Safaris-scaled.webp'
   const profileImage = 'https://extendedstudies.ucsd.edu/getattachment/news-and-events/division-of-extended-studies-blog/April-2023/How-to-Take-Better-Photographs-in-2023-Understandi/800x567-G-Photography-1059413038.jpg.aspx?width=800&'
   const foodImage = 'https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg'
@@ -102,4 +102,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default PhotographerProfile

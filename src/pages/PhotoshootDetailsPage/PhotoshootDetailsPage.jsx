@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PhotoShootDetail = () => {
+const PhotoshootDetailsPage = () => {
 
 
     const [date, setDate] = useState('25 June 2024');
@@ -155,7 +155,7 @@ const PhotoShootDetail = () => {
                                     <span className="text-gray-500">Subtotal</span>
                                     <span className="text-2xl font-bold text-yellow-600">299k</span>
                                 </div>
-
+                    
                                 <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     Checkout
                                 </button>
@@ -168,4 +168,4 @@ const PhotoShootDetail = () => {
         </div>
     );
 };
-export default PhotoShootDetail;
+export default PhotoshootDetailsPage;

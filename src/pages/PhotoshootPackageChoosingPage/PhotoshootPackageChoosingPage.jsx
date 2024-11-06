@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const packages = [
     {
@@ -19,7 +20,7 @@ const packages = [
     },
 ];
 
-const PhotoShootPlans = () => {
+const PhotoshootPackageChoosingPage = () => {
     return (
         <div>
             <div className="bg-yellow-100 p-2 justify-center items-center">
@@ -67,9 +68,11 @@ const PhotoShootPlans = () => {
                                     <span className="text-2xl font-bold text-yellow-500">{pkg.price}</span>
                                     <span className="text-gray-400 line-through">{pkg.oldPrice}</span>
                                 </div>
-                                <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600">
-                                    Select
-                                </button>
+                                <Link to="/booking/photoshoot-details">
+                                    <button className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600">
+                                        Select
+                                    </button>
+                                </Link>
                             </li>
                         ))}
                     </ul>
@@ -80,4 +83,4 @@ const PhotoShootPlans = () => {
     );
 };
 
-export default PhotoShootPlans;
+export default PhotoshootPackageChoosingPage;

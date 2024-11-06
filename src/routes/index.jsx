@@ -3,13 +3,14 @@ import Home from '../pages/Home'
 import Login from '../pages/Auth/Login/Login'
 import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
-import Profile from '../pages/Photographer/Profile/Profile'
-import PhotographerEditPage from '../pages/Photographer/PhotographerEditPage/PhotographerEditPage'
-import ViewPhotographer from '../pages/ChoosePhotographer/ViewPhotoGrapher'
-import ChoosePhotographer from '../pages/BookingPhotoPage'
-import PhotoShootPlans from '../pages/Booking/PhotoShootPlans'
-import PhotoShootDetail from '../pages/Booking/PhotoShootDetail'
-import ConfirmationBooking from '../pages/Booking/ConfirmationBooking'
+import PhotographerProfile from '../pages/PhotgrapherProfile/PhotographerProfile'
+import PhotographerEditPage from '../pages/PhotographerEditPage/PhotographerEditPage'
+import ChoosePhotographerPage from '../pages/ChoosePhotographerPage'
+import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPage'
+import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
+import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
+import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
+
 
 
 // // * for user
@@ -59,7 +60,7 @@ const routes = [
     children: [
       {
         path: '/photographer/profile',
-        element: <Profile />
+        element: <PhotographerProfile />
       },
       {
         path: '/photographer/edit',
@@ -69,24 +70,28 @@ const routes = [
   },
   {
     path: '/choose-photographer',
-    element: <ViewPhotographer />,
-  }
-  ,
-  {
-    path: '/view-photographer',
-    element: <ChoosePhotographer />,
+    children: [
+      {
+        path: '/choose-photographer',
+        element: <ChoosePhotographerPage />,
+      },
+      {
+        path: '/choose-photographer/details',
+        element: <ChoosePhotographerDetailsPage />,
+      },
+    ]
   },
   {
-    path: '/photo-combo',
-    element: <PhotoShootPlans />,
+    path: '/booking/photoshoot-package',
+    element: <PhotoshootPackageChoosingPage />,
   },
   {
-    path: '/booking-photo-details',
-    element:<PhotoShootDetail /> 
+    path: '/booking/photoshoot-details',
+    element:<PhotoshootDetailsPage/> 
   },
   {
-    path: '/confirmation-booking',
-    element: <ConfirmationBooking />,
+    path: '/booking/confirmation',
+    element: <BookingConfirmationPage />,
   }
   
 ]

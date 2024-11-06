@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import ImageHomeCarousel from "/image/Home/home-carousel.jpg"
 import { Link } from 'react-router-dom'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -13,7 +14,68 @@ const navigation = [
 
 export default function Hero() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token')
+    setIsLoggedIn(!!accessToken)
+  }, [])
+
+  const LoginButton = () => (
+    <Link
+      to="/login"
+      className="text-md font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-2 rounded-md transition duration-300 ease-in-out"
+    >
+      Log in <span aria-hidden="true">→</span>
+    </Link>
+  )
+
+  const ProfileImage = () => (
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <MenuButton className="inline-flex items-center">
+          <img 
+            alt="" 
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+            className="inline-block h-14 w-14 rounded-full cursor-pointer"
+          />
+        </MenuButton>
+      </div>
+
+      <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="py-1">
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="#"
+                className={`block px-4 py-2 text-sm ${
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                }`}
+              >
+                Account settings
+              </a>
+            )}
+          </MenuItem>
+          <MenuItem>
+            {({ active }) => (
+              <button
+                type="button"
+                className={`block w-full text-left px-4 py-2 text-sm ${
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                }`}
+                onClick={() => {
+                  localStorage.removeItem('access_token')
+                  window.location.reload()
+                }}
+              >
+                Sign out
+              </button>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </Menu>
+  )
   return (
     <div className="bg-gray-900">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -31,7 +93,7 @@ export default function Hero() {
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
-            >
+            > 
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="h-6 w-6" />
             </button>
@@ -44,12 +106,7 @@ export default function Hero() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link
-              to="/login"
-              className="text-md font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-2 rounded-md transition duration-300 ease-in-out"
-            >
-              Log in <span aria-hidden="true">→</span>
-            </Link>
+            {isLoggedIn ? <ProfileImage /> : <LoginButton />}
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -87,12 +144,16 @@ export default function Hero() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <Link
-                    to="/login"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
-                  >
-                    Log in
-                  </Link>
+                  {isLoggedIn ? (
+                    <ProfileImage />
+                  ) : (
+                    <Link
+                      to="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                    >
+                      Log in
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -130,12 +191,12 @@ export default function Hero() {
               Find and book professional photographers at our platform
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
+              <Link
+                to="/choose-photographer"
                 className="rounded-md bg-yellow-500 px-10 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 BOOK NOW
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -154,4 +215,7 @@ export default function Hero() {
       </div>
     </div>
   )
+
 }
+
+// Add this at the top of your Hero component
