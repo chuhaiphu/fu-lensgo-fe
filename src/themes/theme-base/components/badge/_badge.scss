@@ -1,0 +1,7 @@
+sup.ant-scroll-number.ant-badge-count {
+  @apply font-medium-cereal text-sm flex justify-center items-center rounded-full;
+  transform: translate(10%, -10%);
+  background: var(--color-error);
+  height: 24px;
+  min-width: 24px;
+}

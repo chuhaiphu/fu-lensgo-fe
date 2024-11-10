@@ -1,0 +1,28 @@
+.btn-content {
+    &:active {
+      opacity: 80%;
+    }
+    &-status {
+      color: var(--shade-N300);
+  
+      &-pending {
+        background-color: var(--color-pending);
+      }
+      &-deny {
+        background-color: var(--color-deny);
+      }
+      &-success {
+        background-color: var(--color-success);
+      }
+      &-default {
+        background: linear-gradient(to right, #151316, #5a4f5f);
+      }
+      &-feedback {
+        background-color: var(--color-isbtn);
+      }
+      &-date {
+        background: linear-gradient(to right, #ff6001, #ff9759);
+      }
+    }
+  }
+  

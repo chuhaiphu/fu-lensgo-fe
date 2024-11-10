@@ -1,0 +1,23 @@
+.bg-ready {
+  background: linear-gradient(to right, #71e0ff, #2b8fd8);
+  border: none;
+  .text-time {
+    color: var(--shade-N300);
+  }
+  .btn-schedule {
+    &--reschedule {
+      background-color: var(--shade-N900);
+      color: var(--shade-N300);
+      &:active {
+        opacity: 80%;
+      }
+    }
+    &--meeting {
+      background: var(--shade-N300);
+      color: var(--shade-N900);
+      &:active {
+        opacity: 80%;
+      }
+    }
+  }
+}

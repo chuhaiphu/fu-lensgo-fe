@@ -1,0 +1,56 @@
+input {
+  @apply text-xs-medium;
+  height: 46px;
+  border-radius: 7px;
+  padding: 15px;
+
+  &.ant-input-outlined,
+  &.ant-input {
+    background: transparent;
+    border: 1px solid var(--shade-N800);
+
+    &:hover {
+      border-color: transparent;
+      background: var(--shade-N00);
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    &:focus-within {
+      background: var(--shade-N400);
+    }
+  }
+}
+
+.ant-input-affix-wrapper {
+  &:has(input) {
+    height: 46px;
+
+    input {
+      height: auto;
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+  &.ant-input-outlined {
+    &:focus-within {
+      border-color: transparent;
+      box-shadow: none;
+      background: var(--shade-N400);
+    }
+    &:hover {
+      border-color: transparent;
+      background: var(--shade-N400);
+    }
+  }
+}
+
+// **Override label styles for antd**
+.ant-form-item-label > label {
+  width: 100%;
+  @apply text-xs-bold !important;
+}

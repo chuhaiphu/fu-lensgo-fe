@@ -1,0 +1,49 @@
+.ant-table-wrapper {
+    .ant-table-container {
+        table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+
+            &>thead>tr:first-child>th:last-child {
+                @apply py-5;
+            }
+
+            .ant-table-thead,
+            .ant-table-row {
+                @apply px-4;
+
+                .ant-table-cell {
+                    &:first-child {
+                        @apply rounded-s-full;
+                    }
+
+                    &:last-child {
+                        @apply rounded-e-full;
+                    }
+                }
+            }
+
+            .ant-table-row {
+                margin-bottom: 10px;
+                border: 1px solid var(--shade-N900);
+
+                .ant-table-cell {
+                    @apply py-2 pl-5;
+
+                    border-bottom: 1px solid var(--shade-N500);
+                    border-top: 1px solid var(--shade-N500);
+
+                    &:first-child {
+                        border-left: 1px solid var(--shade-N500);
+
+                    }
+
+                    &:last-child {
+                        border-right: 1px solid var(--shade-N500);
+                    }
+
+                }
+            }
+        }
+    }
+}

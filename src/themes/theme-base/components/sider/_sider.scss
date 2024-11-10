@@ -1,0 +1,4 @@
+.ant-layout-sider-children {
+  @apply flex flex-col justify-center items-center bg-gradient-to-b from-shade-300 to-shade-400;
+  border-right: 0.5px solid rgba(0, 0, 0, 0.2);
+}

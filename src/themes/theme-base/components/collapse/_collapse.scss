@@ -1,0 +1,14 @@
+.ant-collapse {
+    &.ant-collapse-borderless {
+        background-color: transparent;
+    }
+
+    & .ant-collapse-item {
+        border-bottom: none;
+        & .ant-collapse-header {
+            border: solid var(--shade-N800) 1px;
+            margin-bottom: 16px;
+            border-radius: 9999px;
+        }
+    }
+}

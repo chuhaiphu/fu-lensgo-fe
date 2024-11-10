@@ -3,6 +3,20 @@ import Home from '../pages/Home'
 import Login from '../pages/Auth/Login/Login'
 import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
+
+import Profile from '../pages/Photographer/Profile/Profile'
+import PhotographerEditPage from '../pages/Photographer/PhotographerEditPage/PhotographerEditPage'
+import ViewPhotographer from '../pages/ChoosePhotographer/ViewPhotoGrapher'
+import ChoosePhotographer from '../pages/BookingPhotoPage'
+import PhotoShootPlans from '../pages/Booking/PhotoShootPlans'
+import PhotoShootDetail from '../pages/Booking/PhotoShootDetail'
+import ConfirmationBooking from '../pages/Booking/ConfirmationBooking'
+import DashboardLayout from '../components/layouts/dashboard-layout'
+import { ADMIN_ROUTES } from '../constants/routes'
+import OverviewPage from '../pages/BookingPhotoPage/OverviewPage'
+import HomePage from '../components/overview'
+import ViewDetailPage from '../pages/ViewDetail'
+
 import PhotographerProfile from '../pages/PhotgrapherProfile/PhotographerProfile'
 import PhotographerEditPage from '../pages/PhotographerEditPage/PhotographerEditPage'
 import ChoosePhotographerPage from '../pages/ChoosePhotographerPage'
@@ -10,6 +24,7 @@ import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPag
 import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
 import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
 import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
+
 
 
 
@@ -86,6 +101,36 @@ const routes = [
     element: <PhotoshootPackageChoosingPage />,
   },
   {
+    path: '/booking-photo-details',
+    element: <PhotoShootDetail />
+  },
+  {
+    path: '/confirmation-booking',
+    element: <ConfirmationBooking />,
+  },
+
+  {
+    path: ADMIN_ROUTES.ADMIN,
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: ADMIN_ROUTES.OVERVIEW,
+        element: <HomePage />,
+      },
+      {
+        path: ADMIN_ROUTES.CUSTOMER,
+        element: <ViewDetailPage />,
+      },
+      {
+        path: ADMIN_ROUTES.BOOKING,
+        element: <ViewDetailPage />,
+      },
+      {
+        path: ADMIN_ROUTES.STUDIO,
+        element: <ViewDetailPage />,
+      },
+    ],
+  },
     path: '/booking/photoshoot-details',
     element:<PhotoshootDetailsPage/> 
   },
@@ -93,7 +138,6 @@ const routes = [
     path: '/booking/confirmation',
     element: <BookingConfirmationPage />,
   }
-  
 ]
 
 const RouteElements = () => {
