@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import ImageHomeCarousel from "/image/Home/home-carousel.jpg"
+import { Link } from 'react-router-dom'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -11,7 +14,68 @@ const navigation = [
 
 export default function Hero() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token')
+    setIsLoggedIn(!!accessToken)
+  }, [])
+
+  const LoginButton = () => (
+    <Link
+      to="/login"
+      className="text-md font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-2 rounded-md transition duration-300 ease-in-out"
+    >
+      Log in <span aria-hidden="true">→</span>
+    </Link>
+  )
+
+  const ProfileImage = () => (
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <MenuButton className="inline-flex items-center">
+          <img 
+            alt="" 
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+            className="inline-block h-14 w-14 rounded-full cursor-pointer"
+          />
+        </MenuButton>
+      </div>
+
+      <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="py-1">
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="#"
+                className={`block px-4 py-2 text-sm ${
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                }`}
+              >
+                Account settings
+              </a>
+            )}
+          </MenuItem>
+          <MenuItem>
+            {({ active }) => (
+              <button
+                type="button"
+                className={`block w-full text-left px-4 py-2 text-sm ${
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                }`}
+                onClick={() => {
+                  localStorage.removeItem('access_token')
+                  window.location.reload()
+                }}
+              >
+                Sign out
+              </button>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </Menu>
+  )
   return (
     <div className="bg-gray-900">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -20,7 +84,7 @@ export default function Hero() {
             <a href="#" className="-m-1.5 p-1.5">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">LensGo</span>
-                <span className="text-5xl font-island-moments text-[#D26C6C]">LensGo</span>
+                <span className="text-6xl font-island-moments text-[#dd8181]">LensGo</span>
               </a>
             </a>
           </div>
@@ -29,7 +93,7 @@ export default function Hero() {
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
-            >
+            > 
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="h-6 w-6" />
             </button>
@@ -42,9 +106,7 @@ export default function Hero() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-white">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {isLoggedIn ? <ProfileImage /> : <LoginButton />}
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -82,12 +144,16 @@ export default function Hero() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
-                  >
-                    Log in
-                  </a>
+                  {isLoggedIn ? (
+                    <ProfileImage />
+                  ) : (
+                    <Link
+                      to="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                    >
+                      Log in
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -96,11 +162,14 @@ export default function Hero() {
       </header>
 
       <div className="relative isolate overflow-hidden pt-14">
-        <img
-          alt=""
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
+        <div className="absolute inset-0 -z-10">
+          <img
+            alt=""
+            src={ImageHomeCarousel}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black opacity-80"></div>
+        </div>
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -114,33 +183,20 @@ export default function Hero() {
           />
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
-              Announcing our next round of funding.{' '}
-              <a href="#" className="font-semibold text-white">
-                <span aria-hidden="true" className="absolute inset-0" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Data to enrich your online business
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              ONLY THE BEST PHOTOGRAPHERS
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+            <p className="mt-6 text-xl leading-8 text-gray-200">
+              Find and book professional photographers at our platform
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+              <Link
+                to="/choose-photographer"
+                className="rounded-md bg-yellow-500 px-10 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                Get started
-              </a>
-              <a href="#" className="text-sm font-semibold leading-6 text-white">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
+                BOOK NOW
+              </Link>
             </div>
           </div>
         </div>
@@ -159,4 +215,7 @@ export default function Hero() {
       </div>
     </div>
   )
+
 }
+
+// Add this at the top of your Hero component

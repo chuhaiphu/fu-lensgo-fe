@@ -2,8 +2,8 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import Home from '../pages/Home'
 import Login from '../pages/Auth/Login/Login'
 import CustomerRegister from '../pages/Auth/CustomerRegister/CustomerRegister'
-import CompleteRegister from '../pages/Auth/CustomerRegister/CompleteRegister'
 import PhotographerRegister from '../pages/Auth/PhotographerRegister/PhotographerRegister'
+
 import Profile from '../pages/Photographer/Profile/Profile'
 import PhotographerEditPage from '../pages/Photographer/PhotographerEditPage/PhotographerEditPage'
 import ViewPhotographer from '../pages/ChoosePhotographer/ViewPhotoGrapher'
@@ -16,6 +16,16 @@ import { ADMIN_ROUTES } from '../constants/routes'
 import OverviewPage from '../pages/BookingPhotoPage/OverviewPage'
 import HomePage from '../components/overview'
 import ViewDetailPage from '../pages/ViewDetail'
+
+import PhotographerProfile from '../pages/PhotgrapherProfile/PhotographerProfile'
+import PhotographerEditPage from '../pages/PhotographerEditPage/PhotographerEditPage'
+import ChoosePhotographerPage from '../pages/ChoosePhotographerPage'
+import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPage'
+import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
+import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
+import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
+
+
 
 
 // // * for user
@@ -57,10 +67,6 @@ const routes = [
     element: <CustomerRegister />,
   },
   {
-    path: '/complete-register',
-    element: <CompleteRegister />,
-  },
-  {
     path: '/photographer-register',
     element: <PhotographerRegister />,
   },
@@ -69,7 +75,7 @@ const routes = [
     children: [
       {
         path: '/photographer/profile',
-        element: <Profile />
+        element: <PhotographerProfile />
       },
       {
         path: '/photographer/edit',
@@ -79,16 +85,20 @@ const routes = [
   },
   {
     path: '/choose-photographer',
-    element: <ViewPhotographer />,
-  }
-  ,
-  {
-    path: '/view-photographer',
-    element: <ChoosePhotographer />,
+    children: [
+      {
+        path: '/choose-photographer',
+        element: <ChoosePhotographerPage />,
+      },
+      {
+        path: '/choose-photographer/details',
+        element: <ChoosePhotographerDetailsPage />,
+      },
+    ]
   },
   {
-    path: '/photo-combo',
-    element: <PhotoShootPlans />,
+    path: '/booking/photoshoot-package',
+    element: <PhotoshootPackageChoosingPage />,
   },
   {
     path: '/booking-photo-details',
@@ -121,7 +131,13 @@ const routes = [
       },
     ],
   },
-
+    path: '/booking/photoshoot-details',
+    element:<PhotoshootDetailsPage/> 
+  },
+  {
+    path: '/booking/confirmation',
+    element: <BookingConfirmationPage />,
+  }
 ]
 
 const RouteElements = () => {

@@ -1,48 +1,47 @@
 import Footer from "../../components/Footer/Footer"
 import Hero from "../../components/Hero/Hero"
-import { InboxIcon, TrashIcon, UsersIcon } from '@heroicons/react/24/outline'
-
-
-const incentives = [
-  {
-    name: 'Free shipping',
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-shipping-simple.svg',
-    description: "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-  },
-  {
-    name: '10-year warranty',
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-warranty-simple.svg',
-    description: "If it breaks in the first 10 years we'll replace it. After that you're on your own though.",
-  },
-  {
-    name: 'Exchanges',
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-exchange-simple.svg',
-    description:
-      "If you don't like it, trade it to one of your friends for something of theirs. Don't send it here though.",
-  }
-]
+import { PhotoIcon, CameraIcon, ArrowPathRoundedSquareIcon, BellAlertIcon, HandThumbUpIcon, ArrowUpOnSquareStackIcon } from '@heroicons/react/24/outline'
+import ImagePhographer from "/image/Home/photographer-left-side.jpg"
 
 const features = [
   {
-    name: 'Unlimited inboxes',
+    name: 'Build your portfolio',
     description:
-      'Non quo aperiam repellendus quas est est. Eos aut dolore aut ut sit nesciunt. Ex tempora quia. Sit nobis consequatur dolores incidunt.',
-    href: '#',
-    icon: InboxIcon,
+      'Get exposed to a wide array of projects from families to events and even, food. Start building an attractive portfolio with us for your career!',
+    icon: PhotoIcon,
   },
   {
-    name: 'Manage team members',
+    name: 'You shoot, we edit',
     description:
-      'Vero eum voluptatem aliquid nostrum voluptatem. Vitae esse natus. Earum nihil deserunt eos quasi cupiditate. A inventore et molestiae natus.',
-    href: '#',
-    icon: UsersIcon,
+      'Focus on why you became a photographer, taking amazing photos! Just upload the photos and our dedicated editors will handle the rest from sorting, curating to editing.',
+    icon: CameraIcon,
   },
   {
-    name: 'Spam report',
+    name: 'Flexible hours',
     description:
-      'Et quod quaerat dolorem quaerat architecto aliquam accusantium. Ex adipisci et doloremque autem quia quam. Quis eos molestiae at iure impedit.',
-    href: '#',
-    icon: TrashIcon,
+      'Take on projects based on your availability and maximize your free-time by taking on shoots',
+    icon: ArrowPathRoundedSquareIcon,
+  },
+]
+
+const features2 = [
+  {
+    name: 'Get notified',
+    description:
+      'We will notify you of an assigned session directly through the dedicated app.',
+    icon: BellAlertIcon,
+  },
+  {
+    name: 'Enjoy your shoot',
+    description:
+      'Meet new people, take them to the best spots of your city, and have a great time capturing their moments!',
+    icon: HandThumbUpIcon,
+  },
+  {
+    name: 'Upload the photos',
+    description:
+      'Simply upload your photos to our system and we will handle everything from sorting, editing, to delivering the best photos to the clients!',
+    icon: ArrowUpOnSquareStackIcon,
   },
 ]
 
@@ -51,87 +50,85 @@ function Home() {
   return (
     <>
       <Hero />
+      <div className="relative bg-white">
+        <div className="relative h-80 overflow-hidden bg-gray-100 md:absolute md:left-0 md:h-full w-1/3">
+          <img
+            alt=""
+            src={ImagePhographer}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40">
+          <div className="pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-2/3 lg:pl-16 lg:pr-0 xl:pl-24">
+            <p className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl">GET PAID FOR YOUR PHOTOGRAPHY PASSION</p>
+            <p className="mt-6 text-lg leading-7 text-gray-800">
+              Join thousands of SweetEscape photographers and start getting clients, for any kind of photography.
+            </p>
+            <div className="mt-8">
+              <a
+                href="#"
+                className="inline-flex rounded-md bg-yellow-500 px-10 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
+              >
+                JOIN AS A PHOTOGRAPHER
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0">
-            <p className="text-base font-semibold leading-7 text-indigo-600">Get the help you need</p>
-            <h2 className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Support center</h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+          <div className="mx-auto max-w-2xl lg:text-center">
+            <p className="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
+              Why
+              <a href="#" className="-m-1.5 p-3.5">
+                <a href="#" className="-m-1.5 p-1.5">
+                  <span className="sr-only">LensGo</span>
+                  <span className="text-6xl font-island-moments text-[#dd8181]">LensGo</span>
+                </a>
+              </a>
             </p>
           </div>
-        </div>
-      </div>
-
-      <div className="bg-gray-50">
-        <div className="mx-auto max-w-7xl py-24 sm:px-2 sm:py-32 lg:px-4">
-          <div className="mx-auto max-w-2xl px-4 lg:max-w-none">
-            <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-              <div>
-                <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-                  We built our business on great customer service
-                </h2>
-                <p className="mt-4 text-gray-500">
-                  At the beginning at least, but then we realized we could make a lot more money if we kinda stopped
-                  caring about that. Our new strategy is to write a bunch of things that look really good in the
-                  headlines, then clarify in the small print but hope people don't actually read it.
-                </p>
-              </div>
-              <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg bg-gray-100">
-                <img
-                  alt=""
-                  src="https://tailwindui.com/img/ecommerce-images/incentives-07-hero.jpg"
-                  className="object-cover object-center"
-                />
-              </div>
-            </div>
-            <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
-              {incentives.map((incentive) => (
-                <div key={incentive.name} className="sm:flex lg:block">
-                  <div className="sm:flex-shrink-0">
-                    <img alt="" src={incentive.imageSrc} className="h-16 w-16" />
-                  </div>
-                  <div className="mt-4 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">
-                    <h3 className="text-sm font-medium text-gray-900">{incentive.name}</h3>
-                    <p className="mt-2 text-sm text-gray-500">{incentive.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Stay on top of customer support
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-              accusamus quisquam.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+          <div className="mx-auto mt-8 max-w-2xl sm:mt-10 lg:mt-12 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               {features.map((feature) => (
-                <div key={feature.name} className="flex flex-col">
-                  <dt className="text-base font-semibold leading-7 text-gray-900">
-                    <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                      <feature.icon aria-hidden="true" className="h-6 w-6 text-white" />
-                    </div>
+                <div key={feature.name} className="flex flex-col items-center">
+                  <feature.icon aria-hidden="true" className="h-12 w-12 flex-none text-[#dd8181] mb-4" />
+                  <dt className="text-xl font-semibold leading-7 text-gray-900 mb-2">
                     {feature.name}
                   </dt>
-                  <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                  <dd className="mt-2 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                    <p className="flex-auto text-center">{feature.description}</p>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-gray-100 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:text-center">
+            <p className="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
+              How does
+              <a href="#" className="m-1.5 p-2.5">
+                <span className="sr-only">LensGo</span>
+                <span className="text-7xl font-island-moments text-[#dd8181]">LensGo</span>
+              </a>
+              works?
+            </p>
+          </div>
+          <div className="mx-auto mt-8 max-w-2xl sm:mt-20 lg:mt-12 lg:max-w-none">
+            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+              {features2.map((feature) => (
+                <div key={feature.name} className="flex flex-col bg-white rounded-lg shadow-lg p-6 transition-transform hover:scale-105">
+                  <dt className="flex items-center gap-x-3 text-xl font-semibold leading-7 text-gray-900 mb-4">
+                    <feature.icon aria-hidden="true" className="h-8 w-8 flex-none text-orange-500" />
+                    {feature.name}
+                  </dt>
+                  <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
                     <p className="flex-auto">{feature.description}</p>
-                    <p className="mt-6">
-                      <a href={feature.href} className="text-sm font-semibold leading-6 text-indigo-600">
-                        Learn more <span aria-hidden="true">→</span>
-                      </a>
-                    </p>
                   </dd>
                 </div>
               ))}

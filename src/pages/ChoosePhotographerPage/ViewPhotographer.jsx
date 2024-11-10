@@ -1,4 +1,5 @@
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom';
 const photographers = [
     {
         id: 1,
@@ -43,60 +44,62 @@ export default function ViewPhotographer() {
             <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8 justify-center">
                 <div>
                     <h2 className="w-full text-[24px] font-bold tracking-tight text-black bg-[#91A797] h-[58px] text-center flex items-center justify-center">
-                        Choose your studio
+                        Choose Your Photographer
                     </h2>
                 </div>
 
                 <div className="mt-10">
                     {photographers.map((photographer) => (
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-10 ">
-                            <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
-                                {/* Big image */}
-                                <div className="w-3/4 p-2" >
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-full h-auto object-cover object-center rounded-xl"
-                                    />
-                                </div>
-
-                                {/* Small images in a row below the big one */}
-                                <div className="flex justify-center mt-2 w-full">
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                    <img
-                                        alt={photographer.imageAlt}
-                                        src={photographer.imageSrc}
-                                        className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                    />
-                                </div>
-
-                                {/* Photographer information */}
-                                <div className="mt-4 flex justify-between w-full p-2">
-                                    <div>
-                                        <h3 className="font-sans font-bold">
-                                            <a href={photographer.href}>
-                                                <span aria-hidden="true" className="absolute inset-0" />
-                                                {photographer.name}
-                                            </a>
-                                        </h3>
-                                        <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                        <Link to="/choose-photographer/details">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-10 ">
+                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                                    {/* Big image */}
+                                    <div className="w-3/4 p-2" >
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                        />
                                     </div>
-                                    <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
-                                        {photographer.price}k
-                                    </p>
 
+                                    {/* Small images in a row below the big one */}
+                                    <div className="flex justify-center mt-2 w-full">
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                        <img
+                                            alt={photographer.imageAlt}
+                                            src={photographer.imageSrc}
+                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
+                                        />
+                                    </div>
+
+                                    {/* Photographer information */}
+                                    <div className="mt-4 flex justify-between w-full p-2">
+                                        <div>
+                                            <h3 className="font-sans font-bold">
+                                                <a href={photographer.href}>
+                                                    <span aria-hidden="true" className="absolute inset-0" />
+                                                    {photographer.name}
+                                                </a>
+                                            </h3>
+                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                        </div>
+                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
+                                            {photographer.price}k
+                                        </p>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
