@@ -50,7 +50,7 @@ const routes = [
     element: <Home />,
   },
   {
-    path: '/login',
+    path: '/http://localhost:5173/',
     element: <Login />,
   },
   {

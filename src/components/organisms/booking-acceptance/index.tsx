@@ -15,7 +15,7 @@ function TableRender({
     const bookingColumns = [
 
         {
-            title: "Người gửi",
+            title: "user name",
             dataIndex: "sender",
             key: "sender",
             render: (id: string, record: any) => (
@@ -23,7 +23,23 @@ function TableRender({
             )
         },
         {
-            title: "Đề tài",
+            title: "phone number",
+            dataIndex: "topic",
+            key: "topic",
+            render: (id: string, record: any) => (
+                <span>{record?.team?.topics[0]?.name}</span>
+            )
+        },
+        {
+            title: "email",
+            dataIndex: "topic",
+            key: "topic",
+            render: (id: string, record: any) => (
+                <span>{record?.team?.topics[0]?.name}</span>
+            )
+        },
+        {
+            title: "available",
             dataIndex: "topic",
             key: "topic",
             render: (id: string, record: any) => (
@@ -39,7 +55,7 @@ function TableRender({
             )
         },
         {
-            title: "",
+            title: "available",
             dataIndex: "id",
             key: "id",
             render: (id: string, record: any) => (
