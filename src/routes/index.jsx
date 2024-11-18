@@ -16,6 +16,7 @@ import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPag
 import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
 import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
 import UserProfile from '../pages/User/UserPage'
+import PaymentSuccessPage from '../pages/PaymentSuccessPage/PaymentSuccessPage'
 
 
 
@@ -112,6 +113,10 @@ const routes = [
         path: '/booking/confirmation/:bookingId',
         element: <BookingConfirmationPage />,
       },
+      {
+        path: '/booking/confirmation/:paymentId/status/:status',
+        element: <PaymentSuccessPage />,
+      }
     ]
   },
   {

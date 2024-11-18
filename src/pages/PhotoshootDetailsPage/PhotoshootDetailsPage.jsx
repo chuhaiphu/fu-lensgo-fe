@@ -117,7 +117,6 @@ const PhotoshootDetailsPage = () => {
                 accountId: user?.id,
                 studioId: studioId,
                 startTime: `${selectedDate}T${selectedTime}`, // Combine date and time
-                duration: 1, // Set default duration or get from combo details
                 dateOfPhotoshoot: selectedDate,
                 meetingLocation: meetingLocation,
                 additionalInfo: additionalInfo,
@@ -258,13 +257,6 @@ const PhotoshootDetailsPage = () => {
                                 <div className="flex justify-between mb-2">
                                     <span className="text-gray-600">Location</span>
                                     <span className="font-medium">{user?.address}</span>
-                                </div>
-                            </div>
-
-                            <div className="border-t border-gray-200 pt-4 mb-6">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-lg font-medium">Total</span>
-                                    <span className="text-2xl font-bold text-teal-600">299,000đ</span>
                                 </div>
                             </div>
 

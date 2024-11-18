@@ -9,3 +9,13 @@ export const getShootingTypeByStudioId = async (studioId) => {
     throw error.response;
   }
 };
+
+export const createShootingType = async (shootingTypeData) => {
+  try {
+    const response = await api.post('/shootingTypes', shootingTypeData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
