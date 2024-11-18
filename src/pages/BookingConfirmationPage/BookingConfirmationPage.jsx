@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { getBookingByIdApi } from '../../apis/booking';
+import { useParams } from 'react-router-dom';
 
 const BookingConfirmationPage = () => {
+    const { bookingId } = useParams();
+    const [bookingDetails, setBookingDetails] = useState(null);
+
+    useEffect(() => {
+        const fetchBookingDetails = async () => {
+            try {
+                const response = await getBookingByIdApi(bookingId);
+                setBookingDetails(response.content);
+            } catch (error) {
+                console.error("Error fetching booking details:", error);
+            }
+        };
+        fetchBookingDetails();
+    }, [bookingId]);
+
     return (
         <div >
             <div className="px-20 py-5">

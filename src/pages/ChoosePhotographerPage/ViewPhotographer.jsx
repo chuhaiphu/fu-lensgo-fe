@@ -1,17 +1,8 @@
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-const photographers = [
-    {
-        id: 1,
-        name: 'Basic Tee',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '999',
-        color: 'Black',
-    },
-    // More photographers...
-]
+import { getStudiosApi } from '../../apis/studio-api';
+import { getAlbumPhotosApi, getAlbumsApi } from '../../apis/album-api';
 
 const photoData = [
     {
@@ -38,71 +29,103 @@ const photoData = [
 
 
 export default function ViewPhotographer() {
+    const [studios, setStudios] = useState([]);
+    const [albums, setAlbums] = useState([]);
+    const [albumPhotos, setAlbumPhotos] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch all data in parallel
+                const [studiosResponse, albumsResponse, photosResponse] = await Promise.all([
+                    getStudiosApi(),
+                    getAlbumsApi(),
+                    getAlbumPhotosApi()
+                ]);
+
+                setStudios(studiosResponse.content);
+                setAlbums(albumsResponse.content);
+                setAlbumPhotos(photosResponse.content);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const getStudioAlbumPhotos = (studioId) => {
+        const studioAlbums = albums.filter(album => album.studioId === studioId);
+        const photos = [];
+
+        studioAlbums.forEach(album => {
+            const albumPhotosForStudio = albumPhotos.filter(photo => photo.albumId === album.id);
+            photos.push(...albumPhotosForStudio);
+        });
+
+        return photos;
+    };
+
+
     return (
         <div className="bg-white">
             {/*---------------------------------- Choose photographer------------------------------------------ */}
             <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8 justify-center">
                 <div>
                     <h2 className="w-full text-[24px] font-bold tracking-tight text-black bg-[#91A797] h-[58px] text-center flex items-center justify-center">
-                        Choose Your Photographer
+                        Choose Your Studio
                     </h2>
                 </div>
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {studios.map((studio) => {
+                        const studioPhotos = getStudioAlbumPhotos(studio.id)
+                        const mainPhoto = studioPhotos[0]?.pictureLink || '/default-image.jpg'
+                        const smallPhotos = studioPhotos.slice(1, 4)
+                        const studioAlbum = albums.find(album => album.studioId === studio.id)
 
-                <div className="mt-10">
-                    {photographers.map((photographer) => (
-                        <Link to="/choose-photographer/details">
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-10 ">
-                                <div key={photographer.id} className="group relative flex flex-col items-center bg-[#D9D9D9] ">
+                        return (
+                            <Link key={studio.id} to={`/choose-photographer/details/${studio.id}`}>
+                                <div className="group relative flex flex-col items-center bg-[#D9D9D9] p-4 rounded-lg">
                                     {/* Big image */}
-                                    <div className="w-3/4 p-2" >
+                                    <div className="w-full aspect-square mb-4">
                                         <img
-                                            alt={photographer.imageAlt}
-                                            src={photographer.imageSrc}
-                                            className="w-full h-auto object-cover object-center rounded-xl"
+                                            alt={`${studio.name} main`}
+                                            src={mainPhoto}
+                                            className="w-full h-full object-cover object-center rounded-xl"
                                         />
                                     </div>
 
-                                    {/* Small images in a row below the big one */}
-                                    <div className="flex justify-center mt-2 w-full">
-                                        <img
-                                            alt={photographer.imageAlt}
-                                            src={photographer.imageSrc}
-                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                        />
-                                        <img
-                                            alt={photographer.imageAlt}
-                                            src={photographer.imageSrc}
-                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                        />
-                                        <img
-                                            alt={photographer.imageAlt}
-                                            src={photographer.imageSrc}
-                                            className="w-1/3 h-auto object-cover object-center p-2 rounded-xl"
-                                        />
+                                    {/* Small images row */}
+                                    <div className="flex justify-between w-full gap-2 mb-4">
+                                        {smallPhotos.map((photo, index) => (
+                                            <img
+                                                key={index}
+                                                alt={`${studio.name} thumbnail ${index + 1}`}
+                                                src={photo.pictureLink}
+                                                className="w-1/3 aspect-square object-cover object-center rounded-xl"
+                                            />
+                                        ))}
                                     </div>
 
-                                    {/* Photographer information */}
-                                    <div className="mt-4 flex justify-between w-full p-2">
+                                    {/* Studio information */}
+                                    <div className="flex justify-between w-full">
                                         <div>
-                                            <h3 className="font-sans font-bold">
-                                                <a href={photographer.href}>
-                                                    <span aria-hidden="true" className="absolute inset-0" />
-                                                    {photographer.name}
-                                                </a>
-                                            </h3>
-                                            <p className="mt-1 text-sm text-gray-500">{photographer.color}</p>
+                                            <h3 className="font-sans font-bold">{studio.name}</h3>
+                                            <p className="mt-1 text-sm text-gray-500">
+                                                {studioAlbum?.name || 'No album available'}
+                                            </p>
                                         </div>
                                         <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
-                                            {photographer.price}k
+                                            {studioAlbum ? (studioAlbum.price / 1000000).toFixed(3) : 0}M
                                         </p>
-
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        )
+                    })}
                 </div>
             </div>
+
             {/*---------------------------------- Button View More------------------------------------------ */}
             <div className="flex justify-center mb-6">
                 <button

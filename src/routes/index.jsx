@@ -15,6 +15,7 @@ import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPag
 import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
 import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
 import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
+import UserProfile from '../pages/User/UserPage'
 
 
 
@@ -62,6 +63,15 @@ const routes = [
     element: <PhotographerRegister />,
   },
   {
+    path: '/user',
+    children: [
+      {
+        path: '/user/profile',
+        element: <UserProfile />
+      },
+    ]
+  },
+  {
     path: '/photographer',
     children: [
       {
@@ -82,14 +92,27 @@ const routes = [
         element: <ChoosePhotographerPage />,
       },
       {
-        path: '/choose-photographer/details',
+        path: '/choose-photographer/details/:studioId',
         element: <ChoosePhotographerDetailsPage />,
       },
     ]
   },
   {
-    path: '/booking/photoshoot-package',
-    element: <PhotoshootPackageChoosingPage />,
+    path: '/booking',
+    children: [
+      {
+        path: '/booking/photoshoot-package/:studioId/:comboId',
+        element: <PhotoshootPackageChoosingPage />,
+      },
+      {
+        path: '/booking/photoshoot-details/:studioId/:comboId/:shootingTypeId',
+        element: <PhotoshootDetailsPage />,
+      },
+      {
+        path: '/booking/confirmation/:bookingId',
+        element: <BookingConfirmationPage />,
+      },
+    ]
   },
   {
     path: ADMIN_ROUTES.ADMIN,
@@ -112,14 +135,6 @@ const routes = [
         element: <ViewDetailPage />,
       },
     ],
-  },
-  {
-    path: '/booking/photoshoot-details',
-    element:<PhotoshootDetailsPage/> 
-  },
-  {
-    path: '/booking/confirmation',
-    element: <BookingConfirmationPage />,
   }
 ]
 
