@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginApi } from '../../../apis/user-api';
+import { getAccountByEmail, loginApi } from '../../../apis/user-api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,8 +13,11 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginApi({ email, password });
-
+            const loginResponse = await loginApi({ email, password });
+            
+            // Get account details by email after successful login
+            const accountResponse = await getAccountByEmail(email);
+            
             toast.success('Login successful!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -23,7 +26,14 @@ export default function Login() {
                 pauseOnHover: true,
                 draggable: true,
             });
-            navigate('/');
+    
+            // Check studioId and redirect accordingly
+            if (!accountResponse.content.studioId) {
+                navigate('/');
+            } else {
+                navigate('/photographer/profile');
+            }
+            
         } catch (error) {
             toast.error(error?.data?.message || 'Login failed', {
                 position: "top-right",
@@ -35,6 +45,7 @@ export default function Login() {
             });
         }
     };
+    
 
     return (
         <>
