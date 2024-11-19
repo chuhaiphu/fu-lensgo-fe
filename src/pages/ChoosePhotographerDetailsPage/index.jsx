@@ -10,9 +10,7 @@ export default function ChoosePhotographerDetailsPage() {
     return (
         <>
         <Header />
-        <CaroselHeader />
         <OverviewPage studioId={studioId} />
-        <MomentsGrid />
         <Footer />   
         </>
     );

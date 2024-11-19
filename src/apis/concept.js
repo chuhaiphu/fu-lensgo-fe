@@ -11,6 +11,16 @@ export const getStudioConceptsByStudioId = async ({studioId}) => {
   }
 };
 
+export const getStudioConceptByStudioConceptId = async (studioConceptId) => {
+  try {
+    const response = await api.get(`/studio-concepts/${studioConceptId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+
 export const getConceptByConceptId = async (conceptId) => {
   try {
     const response = await api.get(`/concepts/${conceptId}`);
@@ -29,14 +39,35 @@ export const getAllConcepts = async () => {
     console.log(error);
     throw error.response;
   }
-}
+};
 
-export const addNewStudioConcept = async (newStudioConceptData) => {
+
+export const createConcept = async (conceptData) => {
   try {
-    const response = await api.post(`/studio-concepts`, newStudioConceptData);
+    const response = await api.post('/concepts', conceptData);
     return response.data;
   } catch (error) {
     console.log(error);
     throw error.response;
   }
-}
+};
+
+export const addNewStudioConcept = async (newStudioConceptData) => {
+  try {
+    const response = await api.post(`/studio-concepts`, newStudioConceptData);
+     return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+
+export const createStudioConcept = async (studioConceptData) => {
+  try {
+    const response = await api.post('/studio-concepts', studioConceptData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};

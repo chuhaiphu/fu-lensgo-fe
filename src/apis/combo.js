@@ -9,3 +9,13 @@ export const getCombosByStudioIdApi = async ({studioId}) => {
     throw error.response;
   }
 };
+
+export const createCombo = async (comboData) => {
+  try {
+    const response = await api.post('/combos', comboData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};

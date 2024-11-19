@@ -5,6 +5,7 @@ import { getStudioByIdApi } from "../../apis/studio-api";
 import { getAlbumsByStudioId, getAlbumPhotosByAlbumIdApi } from "../../apis/album-api";
 import { getCombosByStudioIdApi } from "../../apis/combo";
 import { toast } from 'react-toastify';
+import MomentsGrid from "./MomentsGrid";
 
 const OverviewPage = ({ studioId }) => {
     const [isCardVisible, setIsCardVisible] = useState(true);
@@ -49,7 +50,7 @@ const OverviewPage = ({ studioId }) => {
     const FloatingToggle = () => (
         <button
             onClick={() => setIsCardVisible(!isCardVisible)}
-            className={`fixed top-128 ${isCardVisible ? 'right-[340px]' : 'right-8'} z-20 
+            className={`fixed top-1/2 transform -translate-y-1/2 ${isCardVisible ? 'right-[340px]' : 'right-8'} z-20 
             p-3 rounded-full shadow-lg transition-all duration-300
             bg-teal-600 hover:bg-teal-700 text-white
             flex items-center gap-2`}
@@ -73,7 +74,7 @@ const OverviewPage = ({ studioId }) => {
             
             if (!accessToken) {
                 toast.warning("Please login to book a photoshoot session!", {
-                    position: "bottom-center",
+                    position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -88,7 +89,7 @@ const OverviewPage = ({ studioId }) => {
         };
 
         return (
-            <div className={`fixed top-96 right-8 z-10 w-80 transition-transform duration-300 ${isCardVisible ? 'translate-x-0' : 'translate-x-[120%]'}`}>
+            <div className={`fixed top-1/2 transform -translate-y-1/2 right-8 z-10 w-80 transition-transform duration-300 ${isCardVisible ? 'translate-x-0' : 'translate-x-[120%]'}`}>
                 <div className="p-6 border rounded-lg shadow-lg bg-white backdrop-blur-sm bg-opacity-90">
                     <div className="space-y-4">
                         {combos.map((combo) => (
@@ -135,12 +136,13 @@ const OverviewPage = ({ studioId }) => {
 
                 {/* Display albums and their photos */}
                 <div className="max-w-6xl mx-auto">
-                    {albums.map((album) => (
+                    {albums.slice(0, 1).map((album) => (
                         <div key={album.id} className="mb-12">
                             <h2 className="text-2xl font-bold mb-6">{album.name}</h2>
                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
                                 {albumPhotos
                                     .filter(photo => album.albumPhotosIds?.includes(photo.id))
+                                    .slice(0, 4)
                                     .map((photo, index) => (
                                         <div key={photo.id} className="group relative overflow-hidden rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl">
                                             <div className="absolute inset-0 bg-black/20 transition-opacity group-hover:opacity-100"></div>
@@ -166,8 +168,10 @@ const OverviewPage = ({ studioId }) => {
                             </div>
                         </div>
                     ))}
-                </div>
 
+                    {/* Add MomentsGrid with other albums */}
+                    <MomentsGrid albums={albums.slice(1)} albumPhotos={albumPhotos} />
+                </div>
                 <div className="py-20 text-center">
                     <div className="mt-6 flex justify-center space-x-6">
                         <button className="flex items-center space-x-2 rounded-full border border-blue-600 px-8 py-3 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50">

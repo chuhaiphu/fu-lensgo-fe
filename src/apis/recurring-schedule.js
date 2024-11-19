@@ -10,3 +10,13 @@ export const getRecurringSchedulesByStudioId = async ({studioId}) => {
     throw error.response;
   }
 };
+
+export const createRecurringSchedule = async (recurringScheduleData) => {
+  try {
+    const response = await api.post('/recurring-schedules', recurringScheduleData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
