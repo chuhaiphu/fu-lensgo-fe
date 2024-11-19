@@ -1,11 +1,53 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 import ReviewComponent from './Review'
+import Combo from './Combo'
+import { jwtDecode } from 'jwt-decode'
+import { getAccountByEmail } from '../../apis/user-api'
+import { getStudioByIdApi } from '../../apis/studio-api'
+import ShootingType from './ShootingType'
+import Concept from './Concept'
+import Calendar from './Calendar'
 
 function PhotographerProfile() {
+  const [selectedSection, setSelectedSection] = useState(null)
+  const [studio, setStudio] = useState(null)
   const backgroundImage = 'https://pangolinphoto.com/wp-content/uploads/2020/05/Guest-with-camera-gear-on-safari-in-Botswana-Pangolin-Photo-Safaris-scaled.webp'
   const profileImage = 'https://extendedstudies.ucsd.edu/getattachment/news-and-events/division-of-extended-studies-blog/April-2023/How-to-Take-Better-Photographs-in-2023-Understandi/800x567-G-Photography-1059413038.jpg.aspx?width=800&'
   const userName = 'John Doe'
+
+  const menuItems = [
+    { id: 'concept', label: 'Manage Concept' },
+    { id: 'combo', label: 'Manage Combo' },
+    { id: 'shootingType', label: 'Manage Shooting Type' },
+    { id: 'calendar', label: 'Manage Calendar' },
+    { id: 'bookingHistory', label: 'View Booking History' }
+  ]
+
+  useEffect(() => {
+    const fetchStudioData = async () => {
+      const accessToken = localStorage.getItem('access_token')
+      if (accessToken) {
+        const decodedToken = jwtDecode(JSON.parse(accessToken))
+        const email = decodedToken.sub
+        try {
+          const accountResponse = await getAccountByEmail(email)
+          const studioId = accountResponse.content.studioId
+          if (studioId) {
+            const studioResponse = await getStudioByIdApi(studioId)
+            setStudio(studioResponse.content)
+          }
+        } catch (error) {
+          console.error("Error fetching studio data:", error)
+        }
+      }
+    }
+    fetchStudioData()
+  }, [])
+
+  const handleMenuClick = (sectionId) => {
+    setSelectedSection(selectedSection === sectionId ? null : sectionId)
+  }
 
   return (
     <>
@@ -52,41 +94,28 @@ function PhotographerProfile() {
         </div>
 
         <div className='flex justify-evenly mx-8 pb-4 border-b-2 border-[#8A6F6F]'>
-          <button
-            type="button"
-            className="bg-white p-2 text-lg font-semibold text-black shadow-sm border border-black transition duration-300 ease-in-out hover:bg-black hover:text-white"
-          >
-            Manage Concept
-          </button>
-          <button
-            type="button"
-            className="bg-white p-2 text-lg font-semibold text-black shadow-sm border border-black transition duration-300 ease-in-out hover:bg-black hover:text-white"
-          >
-            Manage Combo
-          </button>
-          <button
-            type="button"
-            className="bg-white p-2 text-lg font-semibold text-black shadow-sm border border-black transition duration-300 ease-in-out hover:bg-black hover:text-white"
-          >
-            Manage Shooting Type
-          </button>
-          <button
-            type="button"
-            className="bg-white p-2 text-lg font-semibold text-black shadow-sm border border-black transition duration-300 ease-in-out hover:bg-black hover:text-white"
-          >
-            Manage Calendar
-          </button>
-          <button
-            type="button"
-            className="bg-white p-2 text-lg font-semibold text-black shadow-sm border border-black transition duration-300 ease-in-out hover:bg-black hover:text-white"
-          >
-            View Booking History
-          </button>
+          {menuItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`p-2 text-lg font-semibold shadow-sm border transition duration-300 ease-in-out
+    ${selectedSection === item.id
+                  ? 'bg-black text-white hover:bg-gray-800 hover:text-gray-200'
+                  : 'bg-white text-black hover:bg-gray-200 hover:text-black'
+                } border-black`}
+              onClick={() => handleMenuClick(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
-      <ReviewComponent />
-    </>
 
+      {selectedSection === 'combo' && <Combo studio={studio} />}
+      {selectedSection === 'shootingType' && <ShootingType studio={studio} />}
+      {selectedSection === 'concept' && <Concept studio={studio} />}
+      {selectedSection === 'calendar' && <Calendar studio={studio} />}
+    </>
   )
 }
 

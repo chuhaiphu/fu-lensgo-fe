@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginApi } from '../../../apis/user-api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -12,11 +14,25 @@ export default function Login() {
         e.preventDefault();
         try {
             const response = await loginApi({ email, password });
-            console.log(response);
+
+            toast.success('Login successful!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
             navigate('/');
         } catch (error) {
-            console.log(error);
-            console.error('Login failed:', error);
+            toast.error(error?.data?.message || 'Login failed', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
 

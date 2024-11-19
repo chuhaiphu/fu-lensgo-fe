@@ -58,12 +58,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401 || error.response?.data === "Token has expired") {
-      // Clear tokens
-      localStorage.clear();
-      // Redirect to login page
-      window.location.href = "/";
+    // Don't redirect on login endpoint failures
+    if (error.config.url.includes('/login')) {
       return Promise.reject(error);
+    }
+
+    // Only redirect for other 401 errors
+    if (error.response?.status === 401 || error.response?.data === "Token has expired") {
+      localStorage.clear();
+      window.location.href = "/";
     }
     return Promise.reject(error);
   }
