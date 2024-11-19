@@ -20,3 +20,23 @@ export const getConceptByConceptId = async (conceptId) => {
     throw error.response;
   }
 };
+
+export const getAllConcepts = async () => {
+  try {
+    const response = await api.get(`/concepts`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+}
+
+export const addNewStudioConcept = async (newStudioConceptData) => {
+  try {
+    const response = await api.post(`/studio-concepts`, newStudioConceptData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+}
