@@ -17,6 +17,7 @@ import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingCon
 import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
 import UserProfile from '../pages/User/UserPage'
 import PaymentSuccessPage from '../pages/PaymentSuccessPage/PaymentSuccessPage'
+import VerifyOTPPage from '../pages/Auth/VerifyOTPPage/VerifyOTPPage'
 
 
 
@@ -54,6 +55,10 @@ const routes = [
   {
     path: '/login/',
     element: <Login />,
+  },
+  {
+    path: 'verify-otp/:email',
+    element: <VerifyOTPPage />,
   },
   {
     path: '/register',

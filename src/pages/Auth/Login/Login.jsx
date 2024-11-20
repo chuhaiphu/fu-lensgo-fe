@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAccountByEmail, loginApi } from '../../../apis/user-api';
+import { getAccountByEmail, loginApi, sendMailOtpApi } from '../../../apis/user-api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -43,6 +43,10 @@ export default function Login() {
                 pauseOnHover: true,
                 draggable: true,
             });
+            if (error?.data?.status === 428) {
+                await sendMailOtpApi(email);
+                navigate(`/verify-otp/${email}`);
+            }
         }
     };
     

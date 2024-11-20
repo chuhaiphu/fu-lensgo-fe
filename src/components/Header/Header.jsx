@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { loginApi } from '../../apis/user-api'
+import { loginApi, sendMailOtpApi } from '../../apis/user-api'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -15,6 +16,7 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token')
@@ -41,7 +43,21 @@ export default function Header() {
             pauseOnHover: true,
             draggable: true,
           });
-        } else {
+
+        }
+        else if (error?.data?.status === 428) {
+          toast.error('User is disabled', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          await sendMailOtpApi(email);
+          navigate(`/verify-otp/${email}`);
+        }
+        else {
           toast.error('Login failed. Please try again.', {
             position: "top-right",
             autoClose: 3000,
@@ -94,7 +110,7 @@ export default function Header() {
 
   const LoginButton = () => {
     const [isLoginOpen, setIsLoginOpen] = useState(false)
-    
+
     return (
       <>
         <button
@@ -112,9 +128,9 @@ export default function Header() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex items-center">
-          <img 
-            alt="" 
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+          <img
+            alt=""
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             className="inline-block h-14 w-14 rounded-full cursor-pointer"
           />
         </MenuButton>
@@ -126,9 +142,8 @@ export default function Header() {
             {({ active }) => (
               <a
                 href="/user/profile"
-                className={`block px-4 py-2 text-sm ${
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                }`}
+                className={`block px-4 py-2 text-sm ${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                  }`}
               >
                 Account settings
               </a>
@@ -138,9 +153,8 @@ export default function Header() {
             {({ active }) => (
               <button
                 type="button"
-                className={`block w-full text-left px-4 py-2 text-sm ${
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                }`}
+                className={`block w-full text-left px-4 py-2 text-sm ${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                  }`}
                 onClick={() => {
                   localStorage.removeItem('access_token')
                   window.location.reload()

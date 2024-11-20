@@ -27,11 +27,34 @@ export const registerApi = async (signupData) => {
 
 export const refreshTokenApi = async () => {
   try {
-    const response = await api.post("/auth/refresh");
+    const response = await api.post("/account/refresh-token");
     return response.data;
   } catch (error) {
     console.log(error.response);
     throw error;
+  }
+};
+
+export const sendMailOtpApi = async (email) => {
+  try {
+    const response = await api.post("/account/send-otp", { email });
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+    throw error.response;
+  }
+};
+
+export const verifyMailOtpApi = async (email, otp) => {
+  try {
+    const response = await api.post("/account/verify-otp", {
+      email,
+      otp,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+    throw error.response;
   }
 };
 
