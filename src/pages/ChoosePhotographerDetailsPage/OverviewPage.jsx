@@ -98,8 +98,8 @@ const OverviewPage = ({ studioId }) => {
                                 className={`p-4 border rounded-lg cursor-pointer transition-all ${selectedCombo?.id === combo.id ? 'border-teal-600 bg-teal-50' : 'border-gray-200'
                                     }`}>
                                 <div className="flex justify-between items-center mb-2">
-                                    <h3 className="text-lg font-bold text-gray-700">{combo.name}</h3>
-                                    <span className="text-orange-500 font-semibold">{combo.price.toLocaleString()} VND</span>
+                                    <h3 className="text-md font-bold text-gray-700">{combo.name}</h3>
+                                    <span className="text-orange-500 font-semibold">{combo.price.toLocaleString()} đ</span>
                                 </div>
                                 <ul className="text-sm text-gray-600 space-y-1">
                                     <li>• {combo.editedPhotos} edited photos</li>
@@ -111,7 +111,7 @@ const OverviewPage = ({ studioId }) => {
                     </div>
                     <div onClick={handleBookNow} className="block mt-6">
                         <button className="w-full py-3 bg-teal-600 text-white font-bold rounded-md hover:bg-teal-700 transition duration-300">
-                            Book Now
+                            Select this combo
                         </button>
                     </div>
                 </div>

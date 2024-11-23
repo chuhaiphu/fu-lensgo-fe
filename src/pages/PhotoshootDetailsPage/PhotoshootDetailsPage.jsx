@@ -131,6 +131,13 @@ const PhotoshootDetailsPage = () => {
         }
     };
 
+    const getAvailableDays = () => {
+        const dayOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+        return schedules
+            .sort((a, b) => dayOrder.indexOf(a.dayOfWeek) - dayOrder.indexOf(b.dayOfWeek))
+            .map(schedule => schedule.dayOfWeek.charAt(0) + schedule.dayOfWeek.slice(1).toLowerCase());
+    };
+
     return (
         <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10">
@@ -168,7 +175,17 @@ const PhotoshootDetailsPage = () => {
 
                             {/* Date Input */}
                             <div className="mb-6">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Available Date</label>
+                                <div className="flex gap-2 mb-3">
+                                    {getAvailableDays().map((day, index) => (
+                                        <span
+                                            key={index}
+                                            className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm font-medium"
+                                        >
+                                            {day}
+                                        </span>
+                                    ))}
+                                </div>
                                 <input
                                     type="date"
                                     value={selectedDate}
@@ -204,7 +221,7 @@ const PhotoshootDetailsPage = () => {
                                     <option value="">Select a concept</option>
                                     {studioConcepts.map((concept) => (
                                         <option key={concept.id} value={concept.id}>
-                                            {conceptDetails.find(c => c.id === concept.conceptId)?.name}
+                                            {conceptDetails.find(c => c.id === concept.conceptId)?.name} - {studioConcepts.find(stdc => stdc.conceptId === concept.conceptId)?.price} đ
                                         </option>
                                     ))}
                                 </select>
@@ -255,7 +272,7 @@ const PhotoshootDetailsPage = () => {
                                     <span className="font-medium">1 hour</span>
                                 </div>
                                 <div className="flex justify-between mb-2">
-                                    <span className="text-gray-600">Location</span>
+                                    <span className="text-gray-600 mr-2">Location</span>
                                     <span className="font-medium">{user?.address}</span>
                                 </div>
                             </div>

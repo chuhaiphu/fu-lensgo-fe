@@ -57,12 +57,10 @@ export default function ViewPhotographer() {
     const getStudioAlbumPhotos = (studioId) => {
         const studioAlbums = albums.filter(album => album.studioId === studioId);
         const photos = [];
-
         studioAlbums.forEach(album => {
             const albumPhotosForStudio = albumPhotos.filter(photo => photo.albumId === album.id);
             photos.push(...albumPhotosForStudio);
         });
-
         return photos;
     };
 
@@ -96,7 +94,7 @@ export default function ViewPhotographer() {
                                     </div>
 
                                     {/* Small images row */}
-                                    <div className="flex justify-between w-full gap-2 mb-4">
+                                    <div className="flex justify-between w-full gap-2 mb-4 mr-4">
                                         {smallPhotos.map((photo, index) => (
                                             <img
                                                 key={index}
@@ -109,15 +107,10 @@ export default function ViewPhotographer() {
 
                                     {/* Studio information */}
                                     <div className="flex justify-between w-full">
-                                        <div>
-                                            <h3 className="font-sans font-bold">{studio.name}</h3>
+                                            <h2 className="text-xl font-sans font-bold">{studio.name}</h2>
                                             <p className="mt-1 text-sm text-gray-500">
                                                 {studioAlbum?.name || 'No album available'}
                                             </p>
-                                        </div>
-                                        <p className="w-24 text-[#3B2C2C] font-bold text-center bg-[#ffffff] my-auto">
-                                            {studioAlbum ? (studioAlbum.price / 1000000).toFixed(3) : 0}M
-                                        </p>
                                     </div>
                                 </div>
                             </Link>

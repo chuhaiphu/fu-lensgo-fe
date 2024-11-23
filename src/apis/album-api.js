@@ -3,7 +3,6 @@ import api from "./base";
 export const getAlbumsApi = async () => {
   try {
     const response = await api.get("/albums/search");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -14,7 +13,6 @@ export const getAlbumsApi = async () => {
 export const getAlbumsByStudioId = async ({studioId}) => {
   try {
     const response = await api.get(`/albums/search?studioId=${studioId}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -33,9 +31,9 @@ export const getAlbumByIdApi = async (albumId) => {
   }
 };
 
-export const getAlbumPhotosApi = async (albumId) => {
+export const getAlbumPhotosApi = async () => {
   try {
-    const response = await api.get(`/albumPhotos`);
+    const response = await api.get(`/albumPhotos?limit=999`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -46,7 +44,6 @@ export const getAlbumPhotosApi = async (albumId) => {
 export const getAlbumPhotosByAlbumIdApi = async ({albumId}) => {
   try {
     const response = await api.get(`/albumPhotos/search?albumId=${albumId}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
