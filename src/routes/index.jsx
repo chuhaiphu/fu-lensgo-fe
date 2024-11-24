@@ -15,9 +15,9 @@ import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPag
 import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
 import BookingConfirmationPage from '../pages/BookingConfirmationPage/BookingConfirmationPage'
 import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDetailsPage'
-import UserProfile from '../pages/User/UserPage'
 import PaymentSuccessPage from '../pages/PaymentSuccessPage/PaymentSuccessPage'
 import VerifyOTPPage from '../pages/Auth/VerifyOTPPage/VerifyOTPPage'
+import UserProfile from '../pages/UserProfile/UserProfile'
 
 
 

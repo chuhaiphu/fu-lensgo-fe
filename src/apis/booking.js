@@ -3,7 +3,6 @@ import api from "./base";
 export const createBookingApi = async (bookingData) => {
   try {
     const response = await api.post('/bookings', bookingData);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error.response);
@@ -21,3 +20,24 @@ export const getBookingByIdApi = async (bookingId) => {
     throw error.response;
   }
 }
+
+export const getBookingsByAccountIdApi = async (accountId) => {
+  try {
+    const response = await api.get(`/bookings/search?accountId=${accountId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+
+export const getBookingsByStudioId = async (studioId) => {
+  try {
+    const response = await api.get(`/bookings/search?studioId=${studioId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+

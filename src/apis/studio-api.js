@@ -3,7 +3,6 @@ import api from "./base";
 export const getStudiosApi = async () => {
   try {
     const response = await api.get("/studios");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

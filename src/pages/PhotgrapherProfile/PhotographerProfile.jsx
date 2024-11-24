@@ -8,6 +8,8 @@ import { getStudioByIdApi } from '../../apis/studio-api'
 import ShootingType from './ShootingType'
 import Concept from './Concept'
 import Calendar from './Calendar'
+import ClientBookingHistory from './ClientBookingHistory'
+import { getBookingsByStudioId } from '../../apis/booking'
 
 function PhotographerProfile() {
   const [selectedSection, setSelectedSection] = useState(null)
@@ -24,6 +26,8 @@ function PhotographerProfile() {
     { id: 'bookingHistory', label: 'View Booking History' }
   ]
 
+  const [bookings, setBookings] = useState([])
+
   useEffect(() => {
     const fetchStudioData = async () => {
       const accessToken = localStorage.getItem('access_token')
@@ -36,6 +40,8 @@ function PhotographerProfile() {
           if (studioId) {
             const studioResponse = await getStudioByIdApi(studioId)
             setStudio(studioResponse.content)
+            const bookingsResponse = await getBookingsByStudioId(studioResponse.content.id)
+            setBookings(bookingsResponse)
           }
         } catch (error) {
           console.error("Error fetching studio data:", error)
@@ -115,6 +121,7 @@ function PhotographerProfile() {
       {selectedSection === 'shootingType' && <ShootingType studio={studio} />}
       {selectedSection === 'concept' && <Concept studio={studio} />}
       {selectedSection === 'calendar' && <Calendar studio={studio} />}
+      {selectedSection === 'bookingHistory' && <ClientBookingHistory bookings={bookings} />}
     </>
   )
 }

@@ -61,7 +61,6 @@ export const verifyMailOtpApi = async (email, otp) => {
 export const getAccountsApi = async () => {
   try {
     const response = await api.get("/accounts");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -72,7 +71,6 @@ export const getAccountsApi = async () => {
 export const getAccountByEmail = async (email) => {
   try {
     const response = await api.get(`/accounts/${email}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
