@@ -3,8 +3,8 @@ import React from 'react'
 
 
 
-const ViewDetailPage = () => {
+const ViewDetailPageStudio = () => {
   return <TableRender />;
 };
 
-export default ViewDetailPage;
+export default ViewDetailPageStudio;

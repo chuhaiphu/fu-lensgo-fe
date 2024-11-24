@@ -1,6 +1,4 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Language } from '@mui/icons-material';
+
 import { useForm } from 'react-hook-form';
 import { getAllConcepts } from '../../../apis/concept';
 import { addStudio } from '../../../apis/studio-api';
@@ -20,6 +18,13 @@ export default function PhotographerRegister() {
     const shootingTypes = ['OUTDOOR', 'EVENT', 'STUDIO', 'ART'];
     const [selectedShootingTypes, setSelectedShootingTypes] = useState([]);
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }, watch,
+    } = useForm();
+
+
     const handleCheckboxChangeOfShootingType = (type) => {
         setSelectedShootingTypes((prevSelected) =>
             prevSelected.includes(type)
@@ -27,6 +32,7 @@ export default function PhotographerRegister() {
                 : [...prevSelected, type]
         );
     };
+
 
     // Fetch all concepts when component mounts
     useEffect(() => {
@@ -53,9 +59,9 @@ export default function PhotographerRegister() {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
-
-
+    
         try {
+            // Prepare new studio data
             const newStudioData = {
                 name: data.name,
                 camera: data.camera,
@@ -67,12 +73,15 @@ export default function PhotographerRegister() {
                 availableCity: data.availableCity,
                 status: "active"
             };
+    
             // Create new studio
             const responseStudio = await addStudio(newStudioData);
-            console.log(responseStudio);
-            // Update signupData and newStudioConceptData with the new studioId
+            console.log('Studio created:', responseStudio);
+            
+            // Get the studioId from the response
             const studioId = responseStudio.content.id;
-
+    
+            // Prepare signup data
             const signupData = {
                 studioId: studioId,
                 email: data.email,
@@ -87,26 +96,29 @@ export default function PhotographerRegister() {
                 instagram: data.instagram,
                 status: "active"
             };
-            console.log("auth request: " ,signupData);
-
-
-            // Create user
+    
+            console.log("Auth request: ", signupData);
+    
+            // Register the user
             const response = await registerApi(signupData);
-            for (const conceptId of selectedConcepts) {
+    
+            // Handle adding studio concepts
+            const studioConceptPromises = selectedConcepts.map(async (conceptId) => {
                 const newStudioConceptData = {
                     studioId: studioId,
                     conceptId: conceptId,
                     status: "active",
                     price: 0
                 };
-                console.log(newStudioConceptData);
-                // Create new studio concept data
+                console.log("New Studio Concept:", newStudioConceptData);
                 const responseStudioConceptCreated = await addNewStudioConcept(newStudioConceptData);
-
-                // Optional: handle the response if needed
                 console.log("Studio Concept Created:", responseStudioConceptCreated);
-            }
-
+            });
+    
+            // Wait for all concept creation requests to finish
+            await Promise.all(studioConceptPromises);
+    
+            // Show success message
             toast.success('Registration successful! Redirecting...', {
                 position: "top-right",
                 autoClose: 3000,
@@ -115,11 +127,16 @@ export default function PhotographerRegister() {
                 pauseOnHover: true,
                 draggable: true
             });
-
-            // Redirect after 3 seconds
-
+    
+            // Optionally, redirect after successful registration
+            setTimeout(() => {
+                window.location.href = '/dashboard'; // Redirect to the desired page
+            }, 3000); // Adjust time as needed
+    
         } catch (error) {
-            console.log(error);
+            console.error("Registration error:", error);
+            
+            // Display error message to the user
             toast.error(error?.data?.message || 'Registration failed. Please try again.', {
                 position: "top-right",
                 autoClose: 5000,
@@ -130,8 +147,9 @@ export default function PhotographerRegister() {
             });
         }
     };
+    
 
-
+    const password = watch("password");
 
     return (
         <div className="h-screen overflow-auto px-24 flex flex-col space-y-10 divide-y divide-gray-900/10">
@@ -150,7 +168,7 @@ export default function PhotographerRegister() {
                 </div>
             </div>
 
-            <form onSubmit={onSubmit} className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 pb-10 pt-10 pl-10">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 pb-10 pt-10 pl-10">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
                     <div className="px-4 sm:px-0">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
@@ -159,8 +177,9 @@ export default function PhotographerRegister() {
 
                     <div className="px-4 py-6 sm:p-8">
                         <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="sm:col-span-8">
 
+                            {/* Studio Name */}
+                            <div className="sm:col-span-8">
                                 <label htmlFor="name" className="block text-sm font-bold leading-6 text-gray-900">
                                     Studio Name
                                 </label>
@@ -169,26 +188,37 @@ export default function PhotographerRegister() {
                                         id="name"
                                         name="name"
                                         type="text"
+                                        {...register('name', { required: 'Studio name is required' })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Email Address */}
                             <div className="sm:col-span-8">
-                                <label htmlFor="email" className=" block text-sm font-bold leading-6 text-gray-900">
-                                    Email address
+                                <label htmlFor="email" className="block text-sm font-bold leading-6 text-gray-900">
+                                    Email Address
                                 </label>
                                 <div className="mt-2">
                                     <input
                                         id="email"
                                         name="email"
                                         type="email"
-                                        autoComplete="email"
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                message: 'Please enter a valid email address',
+                                            },
+                                        })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Full Name */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="fullName" className="block text-sm font-bold leading-6 text-gray-900">
                                     Full Name
@@ -198,12 +228,14 @@ export default function PhotographerRegister() {
                                         id="fullName"
                                         name="fullName"
                                         type="text"
-                                        autoComplete="name"
+                                        {...register('fullName', { required: 'Full name is required' })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Password */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="password" className="block text-sm font-bold leading-6 text-gray-900">
                                     Password
@@ -213,11 +245,21 @@ export default function PhotographerRegister() {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        {...register('password', {
+                                            required: 'Password is required',
+                                            minLength: { value: 8, message: 'Password must be at least 8 characters' },
+                                            pattern: {
+                                                value:   /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                                message: 'Password must contain at least 8 characters, one uppercase, one number, and one special character',
+                                            },
+                                        })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Confirm Password */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="confirm-password" className="block text-sm font-bold leading-6 text-gray-900">
                                     Confirm Password
@@ -227,11 +269,18 @@ export default function PhotographerRegister() {
                                         id="confirm-password"
                                         name="confirm-password"
                                         type="password"
+                                        {...register('confirmPassword', {
+                                            required: 'Confirm password is required',
+                                            validate: value =>
+                                                value === password || 'Passwords do not match',
+                                        })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Phone Number */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="phone" className="block text-sm font-bold leading-6 text-gray-900">
                                     Phone Number
@@ -241,11 +290,20 @@ export default function PhotographerRegister() {
                                         id="phone"
                                         name="phone"
                                         type="text"
+                                        {...register('phone', {
+                                            required: 'Phone number is required',
+                                            pattern: {
+                                                value: /^\+84\d{9}$/,
+                                                message: 'Phone number must start with +84 and followed by 9 digits',
+                                            },
+                                        })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
                                 </div>
                             </div>
 
+                            {/* Address */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="address" className="block text-sm font-bold leading-6 text-gray-900">
                                     Address
@@ -255,75 +313,74 @@ export default function PhotographerRegister() {
                                         id="address"
                                         name="address"
                                         type="text"
+                                        {...register('address', { required: 'Address is required' })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
+                                    {errors.address && <p className="text-red-500 text-sm">{errors.address.message}</p>}
                                 </div>
                             </div>
 
-                            
-                            <div className="sm:col-span-8">
-                                <label htmlFor="dob" className="block text-sm font-bold leading-6 text-gray-900">
-                                    Date of Birth
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="dob"
-                                        name="dob"
-                                        type="date"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
-
+                            {/* Gender */}
                             <div className="sm:col-span-8">
                                 <label htmlFor="gender" className="block text-sm font-bold leading-6 text-gray-900">
                                     Gender
                                 </label>
                                 <div className="mt-2">
-                                    <input
+                                    <select
                                         id="gender"
                                         name="gender"
-                                        type="text"
+                                        {...register('gender', {
+                                            required: 'Gender is required',
+                                            validate: value => ['MALE', 'FEMALE', 'OTHER'].includes(value) || 'Gender must be one of: MALE, FEMALE, OTHER',
+                                        })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
+                                    >
+                                        <option value="">Select Gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+                                    {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
                                 </div>
-                            </div>
 
-
-
-                            <div className="sm:col-span-8">
-                                <label htmlFor="bankName" className="block text-sm font-bold leading-6 text-gray-900">
-                                    Bank Name
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="bankName"
-                                        name="bankName"
-                                        type="text"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
+                                <div className="sm:col-span-8">
+                                    <label htmlFor="bankName" className="block text-sm font-bold leading-6 text-gray-900">
+                                        Bank Name
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="bankName"
+                                            name="bankName"
+                                            type="text"
+                                            {...register('bankName', { required: 'bank name is required' })}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                        {errors.bankName && <p className="text-red-500 text-sm">{errors.bankName.message}</p>}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="sm:col-span-8">
-                                <label htmlFor="bankAccount" className="block text-sm font-bold leading-6 text-gray-900">
-                                    Bank Account
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="bankAccount"
-                                        name="bankAccount"
-                                        type="text"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
+                                <div className="sm:col-span-8">
+                                    <label htmlFor="bankAccount" className="block text-sm font-bold leading-6 text-gray-900">
+                                        Bank Account
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="bankAccount"
+                                            name="bankAccount"
+                                            type="text"
+                                            {...register('bankAccount', { required: 'bank account is required' })}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                        {errors.bankAccount && <p className="text-red-500 text-sm">{errors.bankAccount.message}</p>}
+                                    </div>
                                 </div>
+
+
+
                             </div>
-
-
-
                         </div>
-                    </div>
 
+                    </div>
                 </div>
                 <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
                     <div className="px-4 sm:px-0">

@@ -1,102 +1,124 @@
-import { Popconfirm, Table } from "antd";
-import { useEffect, useState } from "react";
-import { Button } from "../../atoms/button/Button";
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { Table, message } from 'antd';
+import axios from 'axios';
+import { getStudiosApi } from '../../../apis/studio-api';
 
-
-
-function TableRender({
-}) {
+function TableRender() {
     const [dataSource, setDataSource] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
-    const [isOpenCancelModel, setIsOpenCancelModel] = useState(false);
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 10,
+        total: 0,
+    });
 
+    const fetchStudios = async (page: number, pageSize: number) => {
+        setIsFetching(true);
+        try {
+            const response = await getStudiosApi();
+            const { content, metaDataDTO } = response;
 
-    const bookingColumns = [
+            // Map response data to dataSource for the table
+            setDataSource(
+                content.map((studio: any) => ({
+                    key: studio.id,
+                    name: studio.name,
+                    amount: studio.amount,
+                    bankAccount: studio.bankAccount,
+                    bankName: studio.bankName,
+                    createdDate: studio.createdDate,
+                    updatedDate: studio.updatedDate,
+                    logo: studio.logoLink,
+                    overview: studio.overview,
+                    camera: studio.camera,
+                    availableCity: studio.availableCity,
+                    status: studio.status
+                }))
+            );
 
+            // Update pagination
+            setPagination({
+                current: metaDataDTO.page,
+                pageSize: metaDataDTO.limit,
+                total: metaDataDTO.total,
+            });
+        } catch (error) {
+            message.error('Failed to fetch studios data');
+        } finally {
+            setIsFetching(false);
+        }
+    };
+
+    const handleTableChange = (pagination: any) => {
+        fetchStudios(pagination.current, pagination.pageSize);
+    };
+
+    useEffect(() => {
+        fetchStudios(pagination.current, pagination.pageSize);
+    }, []);
+
+    const columns = [
         {
-            title: "user name",
-            dataIndex: "sender",
-            key: "sender",
-            render: (id: string, record: any) => (
-                <span>{record?.student ? record.student.fullName : record?.team?.userTeams[0]?.user?.fullName}</span>
-            )
+            title: 'Studio Name',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
-            title: "phone number",
-            dataIndex: "topic",
-            key: "topic",
-            render: (id: string, record: any) => (
-                <span>{record?.team?.topics[0]?.name}</span>
-            )
+            title: 'Amount',
+            dataIndex: 'amount',
+            key: 'amount',
+            render: (amount: number) => <span>{amount.toLocaleString()} VND</span>,
         },
         {
-            title: "email",
-            dataIndex: "topic",
-            key: "topic",
-            render: (id: string, record: any) => (
-                <span>{record?.team?.topics[0]?.name}</span>
-            )
+            title: 'Bank Account',
+            dataIndex: 'bankAccount',
+            key: 'bankAccount',
         },
         {
-            title: "available",
-            dataIndex: "topic",
-            key: "topic",
-            render: (id: string, record: any) => (
-                <span>{record?.team?.topics[0]?.name}</span>
-            )
+            title: 'Bank Name',
+            dataIndex: 'bankName',
+            key: 'bankName',
+        },
+   
+        {
+            title: 'Available City',
+            dataIndex: 'availableCity',
+            key: 'availableCity',
         },
         {
-            title: "Ngày tạo",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: (id: string, record: any) => (
-                <span>{record?.createdAt}</span>
-            )
+            title: 'Camera',
+            dataIndex: 'camera',
+            key: 'camera',
         },
         {
-            title: "available",
-            dataIndex: "id",
-            key: "id",
-            render: (id: string, record: any) => (
-                <div className="flex gap-2 float-end">
-                    <Popconfirm
-                        title={`Giảng viên có chắc chắn muốn từ chối yêu cầu này không?`}
-                        onConfirm={() => handleReject(record?.id)}
-                        okText="Có"
-                        cancelText="Không"
-                    >
-                        <Button status="none" variant="outlined" size="xs" fontSize="xs">Từ chối</Button>
-                        </Popconfirm>
-    
-                        <Popconfirm
-                        title={`Giảng viên có chắc chắn muốn chấp nhận yêu cầu này không?`}
-                        onConfirm={() => handleApprove(record?.id)}
-                        okText="Có"
-                        cancelText="Không"
-                    >
-                    <Button size="xs" fontSize="xs">Chấp nhận</Button>
-                    </Popconfirm>
-                </div>
-            ),
+            title: 'Created Date',
+            dataIndex: 'createdDate',
+            key: 'createdDate',
+        },
+        {
+            title: 'Updated Date',
+            dataIndex: 'updatedDate',
+            key: 'updatedDate',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
         },
     ];
 
-
-    const handleReject = (id: string) => {
-
-    }
-    
-    const handleApprove = (id: string) => {
-
-    }
-    
-
-
     return (
-        <>
-            <Table columns={bookingColumns} dataSource={dataSource} loading={isFetching}></Table>
-        </>
+        <Table
+            columns={columns}
+            dataSource={dataSource}
+            loading={isFetching}
+            pagination={{
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                total: pagination.total,
+            }}
+            onChange={handleTableChange}
+        />
     );
 }
 

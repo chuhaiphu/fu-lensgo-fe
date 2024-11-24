@@ -6,7 +6,7 @@ import PhotographerRegister from '../pages/Auth/PhotographerRegister/Photographe
 import DashboardLayout from '../components/layouts/dashboard-layout'
 import { ADMIN_ROUTES } from '../constants/routes'
 import HomePage from '../components/overview'
-import ViewDetailPage from '../pages/ViewDetail'
+import ViewDetailPage from '../pages/ViewDetailStudio'
 
 import PhotographerProfile from '../pages/PhotgrapherProfile/PhotographerProfile'
 import PhotographerEditPage from '../pages/PhotographerEditPage/PhotographerEditPage'
@@ -18,6 +18,9 @@ import PhotoshootDetailsPage from '../pages/PhotoshootDetailsPage/PhotoshootDeta
 import PaymentSuccessPage from '../pages/PaymentSuccessPage/PaymentSuccessPage'
 import VerifyOTPPage from '../pages/Auth/VerifyOTPPage/VerifyOTPPage'
 import UserProfile from '../pages/UserProfile/UserProfile'
+import ViewDetailPageCustomer from '../pages/ViewDetailCustomer'
+import ViewDetailPageStudio from '../pages/ViewDetailStudio'
+import ViewDetailPageOrder from '../pages/ViewDetailOrder'
 
 
 
@@ -134,15 +137,15 @@ const routes = [
       },
       {
         path: ADMIN_ROUTES.CUSTOMER,
-        element: <ViewDetailPage />,
+        element: <ViewDetailPageCustomer />,
       },
       {
         path: ADMIN_ROUTES.BOOKING,
-        element: <ViewDetailPage />,
+        element: <ViewDetailPageOrder />,
       },
       {
         path: ADMIN_ROUTES.STUDIO,
-        element: <ViewDetailPage />,
+        element: <ViewDetailPageStudio />,
       },
     ],
   }

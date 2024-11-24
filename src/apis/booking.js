@@ -21,6 +21,16 @@ export const getBookingByIdApi = async (bookingId) => {
   }
 }
 
+export const getBookingsApi = async () => {
+  try {
+    const response = await api.get('/bookings');
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+}
+
 export const getBookingsByAccountIdApi = async (accountId) => {
   try {
     const response = await api.get(`/bookings/search?accountId=${accountId}`);

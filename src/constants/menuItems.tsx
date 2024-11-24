@@ -34,8 +34,8 @@ export const getLabel = (key?: Key): string | undefined => {
 
 const mentorItems = [
   { label: "Trang Chủ", key: "home", icon: <HomeOutlined /> },
-  { label: "Quản lí khách hàng", key: "customer", icon: <CalendarOutlined /> },
-  { label: "Quản lí đặt lịch", key: "booking", icon: <BookOutlined /> },
+  { label: "Quản lí customer", key: "customer", icon: <CalendarOutlined /> },
+  { label: "Quản lí booking", key: "booking", icon: <BookOutlined /> },
   { label: "Quản lí Studio", key: "studio", icon: <BookOutlined />},
 ];
 
