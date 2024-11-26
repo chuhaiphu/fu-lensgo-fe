@@ -10,6 +10,9 @@ import Concept from './Concept'
 import Calendar from './Calendar'
 import ClientBookingHistory from './ClientBookingHistory'
 import { getBookingsByStudioId } from '../../apis/booking'
+import Album from './Album/Album'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@mui/material'
 
 function PhotographerProfile() {
   const [selectedSection, setSelectedSection] = useState(null)
@@ -23,11 +26,16 @@ function PhotographerProfile() {
     { id: 'combo', label: 'Manage Combo' },
     { id: 'shootingType', label: 'Manage Shooting Type' },
     { id: 'calendar', label: 'Manage Calendar' },
+    { id: 'album', label: 'Manage Album' },
     { id: 'bookingHistory', label: 'View Booking History' }
   ]
 
   const [bookings, setBookings] = useState([])
-
+  const navigate = useNavigate()
+  const handleBackHome = () => {
+    navigate('/')
+  }
+  
   useEffect(() => {
     const fetchStudioData = async () => {
       const accessToken = localStorage.getItem('access_token')
@@ -57,8 +65,18 @@ function PhotographerProfile() {
 
   return (
     <>
+      <div className="p-4">
+        <Button
+          onClick={handleBackHome}
+          variant="outlined"
+          size="md"
+          styleClass="mb-4"
+        >
+          Back to Home
+        </Button>
+      </div>
       <div className="relative flex flex-col mb-8">
-        <div className="relative justify-center items-center mb-4">
+        {/* <div className="relative justify-center items-center mb-4">
           <img
             className="w-full h-96 2xl:h-128 shadow-lg object-cover opacity-90"
             src={backgroundImage}
@@ -97,7 +115,7 @@ function PhotographerProfile() {
           >
             <Cog6ToothIcon className="h-8 w-8 text-black" aria-hidden="true" />
           </button>
-        </div>
+        </div> */}
 
         <div className='flex justify-evenly mx-8 pb-4 border-b-2 border-[#8A6F6F]'>
           {menuItems.map((item) => (
@@ -121,6 +139,7 @@ function PhotographerProfile() {
       {selectedSection === 'shootingType' && <ShootingType studio={studio} />}
       {selectedSection === 'concept' && <Concept studio={studio} />}
       {selectedSection === 'calendar' && <Calendar studio={studio} />}
+      {selectedSection === 'album' && <Album />}
       {selectedSection === 'bookingHistory' && <ClientBookingHistory bookings={bookings} />}
     </>
   )

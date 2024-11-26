@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import api from "../../apis/base";
+import api from "../../../apis/base";
 import { jwtDecode } from "jwt-decode";
 import { Image, message, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-function AddForm() {
+function AddForm({ onAlbumAdded }) {
   const [studioId, setStudioId] = useState("");
   const [albumName, setAlbumName] = useState("");
   const [price, setPrice] = useState("");
@@ -79,17 +79,23 @@ function AddForm() {
         price: price,
         status: "ACTIVE",
       };
-
+  
       const response = await api.post("/albums", albumData);
       const data = response.data.content;
-      console.log("response:", data);
-      console.log("response id:", data.id);
-      setAlbumId(data.id);
       message.success("Album added successfully");
+      onAlbumAdded();
+      
+      // Reset form
+      setAlbumName("");
+      setPrice("");
+      setAlbumId("");
+      setFileList([]);
     } catch (e) {
       message.error("Error adding album:", e);
     }
   };
+  
+
 
   const uploadImage = async ({ file, onSuccess, onError }) => {
     try {

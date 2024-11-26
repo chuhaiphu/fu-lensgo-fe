@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { jwtDecode } from "jwt-decode";
-import api from "../../apis/base";
+import api from "../../../apis/base";
 import AddForm from "./AddForm";
 import ImageArray from "./ImageArray";
 
-function PhotographerEditPage() {
+function Album() {
   const [studioId, setStudioId] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +36,8 @@ function PhotographerEditPage() {
     }
   };
 
+  const [albumsUpdated, setAlbumsUpdated] = useState(false); // Add this state
+
   useEffect(() => {
     getStudioId();
   }, []);
@@ -46,19 +48,23 @@ function PhotographerEditPage() {
         <h2 className="text-2xl font-semibold leading-7 text-gray-900 mb-8">
           Add a new album
         </h2>
-        <AddForm />
+        <AddForm onAlbumAdded={() => setAlbumsUpdated(prev => !prev)} />
       </div>
 
       <Spin spinning={loading}>
         <div className="my-10">
           <h2 className="text-2xl font-semibold leading-7 text-gray-900 mb-8">
-            Your Albums
+            YOUR ALBUMS
           </h2>
-          <ImageArray studioId={studioId} />
+          <ImageArray
+            studioId={studioId}
+            albumsUpdated={albumsUpdated}
+            onAlbumDeleted={() => setAlbumsUpdated(prev => !prev)}
+          />
         </div>
       </Spin>
     </div>
   );
 }
 
-export default PhotographerEditPage;
+export default Album;

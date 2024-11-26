@@ -9,7 +9,6 @@ import HomePage from '../components/overview'
 import ViewDetailPage from '../pages/ViewDetailStudio'
 
 import PhotographerProfile from '../pages/PhotgrapherProfile/PhotographerProfile'
-import PhotographerEditPage from '../pages/PhotographerEditPage/PhotographerEditPage'
 import ChoosePhotographerPage from '../pages/ChoosePhotographerPage'
 import ChoosePhotographerDetailsPage from '../pages/ChoosePhotographerDetailsPage'
 import PhotoshootPackageChoosingPage from '../pages/PhotoshootPackageChoosingPage/PhotoshootPackageChoosingPage'
@@ -86,11 +85,7 @@ const routes = [
       {
         path: '/photographer/profile',
         element: <PhotographerProfile />
-      },
-      {
-        path: '/photographer/edit',
-        element: <PhotographerEditPage />
-      },
+      }
     ]
   },
   {

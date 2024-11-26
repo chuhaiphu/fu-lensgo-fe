@@ -31,6 +31,16 @@ export const getAlbumByIdApi = async (albumId) => {
   }
 };
 
+export const deleteAlbumApi = async (albumId) => {
+  try {
+    const response = await api.delete(`/albums/${albumId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+
 export const getAlbumPhotosApi = async () => {
   try {
     const response = await api.get(`/albumPhotos?limit=999`);
@@ -40,6 +50,17 @@ export const getAlbumPhotosApi = async () => {
     throw error.response;
   }
 };
+
+export const deleteAlbumPhotoApi = async (albumPhotoId) => {
+  try {
+    const response = await api.delete(`/albumPhotos/${albumPhotoId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
+
 
 export const getAlbumPhotosByAlbumIdApi = async ({albumId}) => {
   try {

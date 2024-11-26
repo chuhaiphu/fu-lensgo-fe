@@ -12,9 +12,13 @@ export default function CustomerRegister() {
 
     const onSubmit = async (data) => {
         try {
+            const phoneNumber = data.phone.startsWith('0') 
+            ? '+84' + data.phone.substring(1) 
+            : data.phone;
+
             const signupData = {
                 email: data.email,
-                phone: data.phone,
+                phone: phoneNumber,
                 password: data.password,
                 username: data.email,
                 fullName: data.name,
