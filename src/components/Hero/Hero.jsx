@@ -52,7 +52,7 @@ export default function Hero() {
                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                 }`}
               >
-                Account settings
+                Account Details
               </a>
             )}
           </MenuItem>
@@ -65,7 +65,8 @@ export default function Hero() {
                 }`}
                 onClick={() => {
                   localStorage.removeItem('access_token')
-                  window.location.reload()
+                  localStorage.removeItem('refresh_token')
+                  window.location.href = '/'
                 }}
               >
                 Sign out
@@ -81,8 +82,8 @@ export default function Hero() {
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">LensGo</span>
                 <span className="text-6xl font-island-moments text-[#dd8181]">LensGo</span>
               </a>

@@ -19,3 +19,13 @@ export const createShootingType = async (shootingTypeData) => {
     throw error.response;
   }
 };
+
+export const deleteShootingTypeApi = async (shootingTypeId) => {
+  try {
+    const response = await api.delete(`/shootingTypes?id=${shootingTypeId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};

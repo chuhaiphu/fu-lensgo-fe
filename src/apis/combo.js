@@ -18,3 +18,13 @@ export const createCombo = async (comboData) => {
     throw error.response;
   }
 };
+
+export const deleteComboApi = async (comboId) => {
+  try {
+    const response = await api.delete(`/combos/${comboId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};

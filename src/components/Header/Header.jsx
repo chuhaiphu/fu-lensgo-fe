@@ -145,7 +145,7 @@ export default function Header() {
                 className={`block px-4 py-2 text-sm ${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                   }`}
               >
-                Account settings
+                Account Details
               </a>
             )}
           </MenuItem>
@@ -157,7 +157,8 @@ export default function Header() {
                   }`}
                 onClick={() => {
                   localStorage.removeItem('access_token')
-                  window.location.reload()
+                  localStorage.removeItem('refresh_token')
+                  window.location.href = '/'
                 }}
               >
                 Sign out
@@ -173,7 +174,7 @@ export default function Header() {
     <header className="bg-white">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex items-center gap-x-12">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">LensGo</span>
             <span className="text-3xl font-island-moments text-[#D26C6C]">LensGo</span>
           </a>

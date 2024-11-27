@@ -171,15 +171,7 @@ const OverviewPage = ({ studioId }) => {
 
                     {/* Add MomentsGrid with other albums */}
                     <MomentsGrid albums={albums.slice(1)} albumPhotos={albumPhotos} />
-                </div>
-                <div className="py-20 text-center">
-                    <div className="mt-6 flex justify-center space-x-6">
-                        <button className="flex items-center space-x-2 rounded-full border border-blue-600 px-8 py-3 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50">
-                            <Instagram className="h-4 w-4" />
-                            <span>Follow Us</span>
-                        </button>
-                    </div>
-                </div>
+                </div>  
             </div>
         </div>
     );

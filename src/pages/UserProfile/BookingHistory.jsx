@@ -4,6 +4,8 @@ import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/sol
 import { getStudioByIdApi } from '../../apis/studio-api'
 import { getCombosByStudioIdApi } from '../../apis/combo'
 import { getStudioConceptByStudioConceptId, getConceptByConceptId } from '../../apis/concept'
+import { Modal, Rate, Input } from 'antd'
+import { creatReviewApi } from '../../apis/review-api'
 
 const statusColors = {
   PAID: {
@@ -26,6 +28,12 @@ const statusColors = {
 export default function BookingHistory({ bookings }) {
   const [enrichedBookings, setEnrichedBookings] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+  const [selectedBooking, setSelectedBooking] = useState(null)
+  const [reviewForm, setReviewForm] = useState({
+    content: '',
+    rating: 0
+  })
 
   useEffect(() => {
     const enrichBookingsData = async () => {
@@ -56,6 +64,25 @@ export default function BookingHistory({ bookings }) {
 
     enrichBookingsData()
   }, [bookings])
+
+  const handleReviewSubmit = async () => {
+    try {
+      const reviewData = {
+        bookingId: selectedBooking.id,
+        studioId: selectedBooking.studioId,
+        content: reviewForm.content,
+        rating: reviewForm.rating,
+        status: 'ACTIVE'
+      }
+      
+      await creatReviewApi(reviewData)
+      setIsReviewModalOpen(false)
+      setReviewForm({ content: '', rating: 0 })
+      // Optional: Add success message or refresh bookings
+    } catch (error) {
+      console.error('Failed to submit review:', error)
+    }
+  }
 
   const renderLoader = () => (
     <div className="mt-8 space-y-4 animate-pulse">
@@ -99,6 +126,7 @@ export default function BookingHistory({ bookings }) {
                       <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
                       <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
                       <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
@@ -138,6 +166,19 @@ export default function BookingHistory({ bookings }) {
                               {booking.status}
                             </span>
                           </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm">
+                            {booking.status === 'PAID' && (
+                              <button
+                                onClick={() => {
+                                  setSelectedBooking(booking)
+                                  setIsReviewModalOpen(true)
+                                }}
+                                className="bg-blue text-white px-3 py-1 rounded-md text-sm"
+                              >
+                                Add Review
+                              </button>
+                            )}
+                          </td>
                         </tr>
                       )
                     })}
@@ -148,6 +189,31 @@ export default function BookingHistory({ bookings }) {
           </div>
         </div>
       )}
+      <Modal
+        title="Write a Review"
+        open={isReviewModalOpen}
+        onOk={handleReviewSubmit}
+        onCancel={() => setIsReviewModalOpen(false)}
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Rating</label>
+            <Rate 
+              value={reviewForm.rating}
+              onChange={(value) => setReviewForm(prev => ({...prev, rating: value}))}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Review</label>
+            <Input.TextArea
+              value={reviewForm.content}
+              onChange={(e) => setReviewForm(prev => ({...prev, content: e.target.value}))}
+              rows={4}
+              placeholder="Write your review here..."
+            />
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }

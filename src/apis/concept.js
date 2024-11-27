@@ -70,3 +70,13 @@ export const createStudioConcept = async (studioConceptData) => {
     throw error.response;
   }
 };
+
+export const deleteConceptApi = async (conceptId) => {
+  try {
+    const response = await api.delete(`/concepts/${conceptId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};
