@@ -5,6 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { loginApi, sendMailOtpApi } from '../../apis/user-api'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { Link, useParams } from "react-router-dom";
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -174,10 +175,12 @@ export default function Header() {
     <header className="bg-white">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex items-center gap-x-12">
-          <a href="/" className="-m-1.5 p-1.5">
+          <Link to={`/`}>
+          <a href="*" className="-m-1.5 p-1.5">
             <span className="sr-only">LensGo</span>
             <span className="text-3xl font-island-moments text-[#D26C6C]">LensGo</span>
           </a>
+          </Link>
 
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
