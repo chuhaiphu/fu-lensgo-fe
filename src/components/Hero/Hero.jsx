@@ -4,12 +4,14 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import ImageHomeCarousel from "/image/Home/home-carousel.jpg"
 import { Link } from 'react-router-dom'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {jwtDecode} from 'jwt-decode'
+import { getAccountByEmail } from '../../apis/user-api'
 
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: '', href: '#' },
+  { name: '', href: '#' },
+  { name: '', href: '#' },
+  { name: '', href: '#' },
 ]
 
 export default function Hero() {
@@ -24,59 +26,80 @@ export default function Hero() {
   const LoginButton = () => (
     <Link
       to="/login"
-      className="text-md font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-2 rounded-md transition duration-300 ease-in-out"
+      className="text-2xl font-semibold leading-6 text-white bg-[#dd8181] hover:bg-[#c76f6f] px-4 py-3 rounded-md transition duration-300 ease-in-out"
     >
       Log in <span aria-hidden="true">→</span>
     </Link>
   )
 
-  const ProfileImage = () => (
-    <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <MenuButton className="inline-flex items-center">
-          <img 
-            alt="" 
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
-            className="inline-block h-14 w-14 rounded-full cursor-pointer"
-          />
-        </MenuButton>
-      </div>
+  const ProfileImage = () => {
+    const [hasStudio, setHasStudio] = useState(false)
 
-      <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-        <div className="py-1">
-          <MenuItem>
-            {({ active }) => (
-              <a
-                href="/user/profile"
-                className={`block px-4 py-2 text-sm ${
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                }`}
-              >
-                Account Details
-              </a>
-            )}
-          </MenuItem>
-          <MenuItem>
-            {({ active }) => (
-              <button
-                type="button"
-                className={`block w-full text-left px-4 py-2 text-sm ${
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                }`}
-                onClick={() => {
-                  localStorage.removeItem('access_token')
-                  localStorage.removeItem('refresh_token')
-                  window.location.href = '/'
-                }}
-              >
-                Sign out
-              </button>
-            )}
-          </MenuItem>
+    useEffect(() => {
+      const checkStudioStatus = async () => {
+        const accessToken = JSON.parse(localStorage.getItem('access_token'))
+        const decodedToken = jwtDecode(accessToken)
+        const email = decodedToken.sub
+        
+        try {
+          const accountResponse = await getAccountByEmail(email)
+          setHasStudio(!!accountResponse.content.studioId)
+        } catch (error) {
+          console.error('Error fetching account details:', error)
+        }
+      }
+
+      checkStudioStatus()
+    }, [])
+
+    return (
+      <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <MenuButton className="inline-flex items-center">
+            <img 
+              alt="" 
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+              className="inline-block h-14 w-14 rounded-full cursor-pointer"
+            />
+          </MenuButton>
         </div>
-      </MenuItems>
-    </Menu>
-  )
+
+        <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            <MenuItem>
+              {({ active }) => (
+                <a
+                  href={hasStudio ? "/photographer/profile" : "/user/profile"}
+                  className={`block px-4 py-2 text-sm ${
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                  }`}
+                >
+                  {hasStudio ? 'Manage Studio' : 'Manage Account'}
+                </a>
+              )}
+            </MenuItem>
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  type="button"
+                  className={`block w-full text-left px-4 py-2 text-sm ${
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                  }`}
+                  onClick={() => {
+                    localStorage.removeItem('access_token')
+                    localStorage.removeItem('refresh_token')
+                    window.location.href = '/'
+                  }}
+                >
+                  Sign out
+                </button>
+              )}
+            </MenuItem>
+          </div>
+        </MenuItems>
+      </Menu>
+    )
+  }
   return (
     <div className="bg-gray-900">
       <header className="absolute inset-x-0 top-0 z-50">

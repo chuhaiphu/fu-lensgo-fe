@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { createRecurringSchedule, getRecurringSchedulesByStudioId } from '../../apis/recurring-schedule'
+import { createRecurringSchedule, deleteRecurringSchedule, getRecurringSchedulesByStudioId } from '../../apis/recurring-schedule'
 
 function Calendar({ studio }) {
   const [schedules, setSchedules] = useState([])
@@ -19,6 +19,21 @@ function Calendar({ studio }) {
   const daysOfWeek = [
     'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'
   ]
+
+  const availableDays = daysOfWeek.filter(day =>
+    !schedules.some(schedule => schedule.dayOfWeek === day)
+  );
+
+  const handleDeleteSchedule = async (scheduleId) => {
+    try {
+      await deleteRecurringSchedule(scheduleId);
+      // Fetch updated schedules after deletion
+      const updatedSchedules = await getRecurringSchedulesByStudioId({ studioId: studio.id });
+      setSchedules(updatedSchedules.content);
+    } catch (error) {
+      console.error('Error deleting schedule:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -94,12 +109,11 @@ function Calendar({ studio }) {
               onChange={(e) => setScheduleFormData({ ...scheduleFormData, dayOfWeek: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black p-2 border"
             >
-              {daysOfWeek.map((day) => (
+              {availableDays.map((day) => (
                 <option key={day} value={day}>{day}</option>
               ))}
             </select>
           </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Start Time (Hour : Minute)</label>
@@ -169,9 +183,17 @@ function Calendar({ studio }) {
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold">{schedule.dayOfWeek}</h3>
-                <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
-                  {schedule.status}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
+                    {schedule.status}
+                  </span>
+                  <button
+                    onClick={() => handleDeleteSchedule(schedule.id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-4 text-gray-600">
                 <div>

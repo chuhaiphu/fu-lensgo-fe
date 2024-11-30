@@ -19,3 +19,13 @@ export const createRecurringSchedule = async (recurringScheduleData) => {
     throw error.response;
   }
 };
+
+export const deleteRecurringSchedule = async (scheduleId) => {
+  try {
+    const response = await api.delete(`/recurring-schedules/${scheduleId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response;
+  }
+};

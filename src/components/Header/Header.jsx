@@ -8,10 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import { Link, useParams } from "react-router-dom";
 
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: 'Home', href: '/' },
+  { name: 'About us', href: 'https://www.facebook.com/share/18NCEsMnn5/?mibextid=kFxxJD' },
 ]
 
 export default function Header() {
@@ -116,7 +114,7 @@ export default function Header() {
       <>
         <button
           onClick={() => setIsLoginOpen(true)}
-          className="text-sm font-semibold leading-6 text-gray-900"
+          className="text-xl font-semibold leading-6 text-gray-900"
         >
           Log in <span aria-hidden="true">→</span>
         </button>
@@ -184,7 +182,7 @@ export default function Header() {
 
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900" target='_blank'>
                 {item.name}
               </a>
             ))}

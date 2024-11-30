@@ -47,7 +47,7 @@ export default function BookingHistory({ bookings }) {
             const combo = combosData.content.find(c => c.id === booking.comboId)
             const studioConcept = await getStudioConceptByStudioConceptId(booking.studioConceptId)
             const concept = await getConceptByConceptId(studioConcept.content.conceptId)
-
+            
             return {
               ...booking,
               studioName: studioData.content.name,
@@ -56,6 +56,7 @@ export default function BookingHistory({ bookings }) {
             }
           })
         )
+        console.log(enrichedData);
         setEnrichedBookings(enrichedData)
       } finally {
         setIsLoading(false)

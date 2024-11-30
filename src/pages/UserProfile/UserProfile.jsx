@@ -13,7 +13,7 @@ import { getAccountByEmail } from '../../apis/user-api'
 import { getBookingsByAccountIdApi } from '../../apis/booking'
 
 const secondaryNavigation = [
-  { name: 'General', icon: UserCircleIcon },
+  // { name: 'General', icon: UserCircleIcon },
   { name: 'Booking History', icon: CreditCardIcon },
 ]
 
@@ -44,16 +44,17 @@ export default function UserProfile() {
     fetchUserData()
   }, [])
 
-  const renderContent = () => {
-    switch(activeTab) {
-      case 'General':
-        return <ProfileGeneral userData={userData} />
-      case 'Booking History':
-        return <BookingHistory bookings={bookings} />
-      default:
-        return <ProfileGeneral userData={userData} />
-    }
-  }
+  // const renderContent = () => {
+  //   switch(activeTab) {
+  //     case 'General':
+  //       return <ProfileGeneral userData={userData} />
+  //     case 'Booking History':
+  //       return <BookingHistory bookings={bookings} />
+  //     default:
+  //       return <ProfileGeneral userData={userData} />
+  //   }
+  // }
+
   return (
     <>
       <Header />
@@ -88,7 +89,7 @@ export default function UserProfile() {
             </ul>
           </nav>
         </aside>
-        {renderContent()}
+        <BookingHistory bookings={bookings} />
       </div>
     </>
   )
