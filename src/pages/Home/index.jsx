@@ -2,6 +2,7 @@ import Footer from "../../components/Footer/Footer"
 import Hero from "../../components/Hero/Hero"
 import { PhotoIcon, CameraIcon, ArrowPathRoundedSquareIcon, BellAlertIcon, HandThumbUpIcon, ArrowUpOnSquareStackIcon } from '@heroicons/react/24/outline'
 import ImagePhographer from "/image/Home/photographer-left-side.jpg"
+import { Link, useParams } from "react-router-dom";
 
 const features = [
   {
@@ -65,12 +66,14 @@ function Home() {
               Join thousands of SweetEscape photographers and start getting clients, for any kind of photography.
             </p>
             <div className="mt-8">
+              <Link to={`/photographer-register`}>
               <a
                 href="#"
                 className="inline-flex rounded-md bg-yellow-500 px-10 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
               >
                 JOIN AS A PHOTOGRAPHER
               </a>
+              </Link>
             </div>
           </div>
         </div>
